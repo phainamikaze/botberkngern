@@ -5,8 +5,9 @@ import Addnew from './components/Addnew';
 
 const App = () => (
   <div>
-    <Route path="/" exact component={Addnew} />
-    <Route path="/about/" component={Oops} />
+    <Route path="/" exact component={Oops} />
+    <Route path="/addnew" component={Addnew} />
+    <Route path="/about" component={Oops} />
   </div>
 );
 
