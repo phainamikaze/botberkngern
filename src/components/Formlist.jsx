@@ -5,32 +5,39 @@ import { ButtonArea,
   CellsTips,
   CellHeader,
   CellBody,
-  Form,
   FormCell,
   Input,
   Label,
-  Page
+  Page,
+  CellFooter,
+  Icon
 } from 'react-weui';
 const Formlist = (props) => {
+    
     return (
         <Page transition={false}>
-            <CellsTitle>สร้างลิสต์</CellsTitle>
-            <Form>
-                <FormCell>
-                    <CellHeader>
-                        <Label>ลิสต์</Label>
-                    </CellHeader>
-                    <CellBody>
-                        <Input type="text" placeholder="กรอกชื่อลิสต์" id="listtitle"/>
-                    </CellBody>
-                </FormCell>
-            </Form>
+        {/* Empty action attr enables 'Go' Submit Button on iOS Keyboard */}
+            <form action="true" onSubmit={props.onSubmit} >
+            <CellsTitle>สร้างลิสต์</CellsTitle>   
+            <FormCell>
+                <CellHeader>
+                    <Label>ลิสต์</Label>
+                </CellHeader>
+                <CellBody>
+                    <Input type="text" placeholder="กรอกชื่อลิสต์" />
+                </CellBody>
+                <CellFooter>
+                    <Icon value="warn" />
+                </CellFooter>
+            </FormCell>
+            
             <CellsTips>กรุณากรอกชื่อลิสต์</CellsTips>
             <ButtonArea>
-                <Button onClick={() => props.createnewlist(document.getElementById('listtitle'))}>
+                <Button>
                     OK
                 </Button>
             </ButtonArea>
+            </form>
         </Page>
     );
 };
