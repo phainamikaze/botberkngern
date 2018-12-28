@@ -3,8 +3,9 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import Oops from './components/Oops';
+import {Provider} from 'react-redux';
+import store from './store';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter } from 'react-router-dom';
 
 import 'weui';
 import 'react-weui/build/packages/react-weui.css';
@@ -13,9 +14,9 @@ window.attachApp = () => {
   let appRender;
   if (true) {
     appRender = (
-      <BrowserRouter>
+      <Provider store={store}>
         <App />
-      </BrowserRouter>
+      </Provider>
     );
   } else {
     appRender = <Oops/>;
