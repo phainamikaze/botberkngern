@@ -11,7 +11,7 @@ function createlist(history){
             .then(
                 listid => { 
                     dispatch(success(listid));
-                    //history.push('/');
+                    history.push('/itemslist');
                 },
                 error => {
                     history.push('/test');

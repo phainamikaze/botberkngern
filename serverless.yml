@@ -95,13 +95,77 @@ functions:
 #      variable2: value2
 
 # you can add CloudFormation resource templates here
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
+resources:
+  Resources:
+    StaticWebHosting:
+      Type: AWS::S3::Bucket
+      Properties:
+        AccessControl: PublicRead
+        WebsiteConfiguration:
+          IndexDocument: index.html
+          ErrorDocument: index.html
+      DeletionPolicy: Retain
+    BucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        PolicyDocument:
+          Id: MyStaticWebHostingPolicy
+          Version: '2012-10-17'
+          Statement:
+            - Sid: PublicReadForGetBucketObjects
+              Effect: Allow
+              Principal: '*'
+              Action: 's3:GetObject'
+              Resource: !Join 
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref StaticWebHosting
+                  - /*
+        Bucket: !Ref StaticWebHosting
+    StaticWebHostingCloudFront:
+      Type: AWS::CloudFront::Distribution
+      Properties:
+        DistributionConfig:
+          Enabled: True
+          Origins:
+            - DomainName: !Select
+                - 1
+                - !Split ["//", !GetAtt StaticWebHosting.WebsiteURL]
+              Id: !Select
+                - 0
+                - !Split
+                  - "."
+                  - !Select
+                    - 1
+                    - !Split ["//", !GetAtt StaticWebHosting.WebsiteURL]
+              CustomOriginConfig:
+                OriginProtocolPolicy: http-only
+          DefaultCacheBehavior:
+            TargetOriginId: !Select
+                - 0
+                - !Split
+                  - "."
+                  - !Select
+                    - 1
+                    - !Split ["//", !GetAtt StaticWebHosting.WebsiteURL]
+            DefaultTTL: 5
+            MaxTTL: 30
+            ForwardedValues:
+              QueryString: false
+            ViewerProtocolPolicy: redirect-to-https
+  Outputs:
+    WebsiteURL:
+      Value: !GetAtt 
+        - StaticWebHosting
+        - WebsiteURL
+      Description: URL for website hosted on S3
+    CloudFrontURL:
+      Value: !GetAtt StaticWebHostingCloudFront.DomainName
+    S3BucketSecureURL:
+      Value: !Join 
+        - ''
+        - - 'https://'
+          - !GetAtt 
+            - StaticWebHosting
+            - DomainName
+      Description: Name of S3 bucket to hold website content
