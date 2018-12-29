@@ -3,10 +3,10 @@ const listReducer = (state = {
 }, action) => {
     switch (action.type) {
         case "CREATE_LIST":
-            state = {
-                ...state,
-                title: action.payload
-            };
+            // state = {
+            //     ...state,
+            //     title: action.payload
+            // };
             break;
     }
     return state;

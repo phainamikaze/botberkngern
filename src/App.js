@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import Oops from './components/Oops';
 import Addnew from './components/Addnew';
 
-import Createlist from './containers/Createlist';
+import Createlist from './pages/Createlist';
 import { BrowserRouter } from 'react-router-dom';
 
 const App = () => (
