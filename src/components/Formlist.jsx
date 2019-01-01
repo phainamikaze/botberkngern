@@ -15,7 +15,7 @@ import { ButtonArea,
 const Formlist = (props) => {
     
     return (
-        <Page transition={false}>
+        <div>
         {/* Empty action attr enables 'Go' Submit Button on iOS Keyboard */}
             <form action="true" onSubmit={props.onSubmit} >
             <CellsTitle>สร้างลิสต์</CellsTitle>   
@@ -38,7 +38,7 @@ const Formlist = (props) => {
                 </Button>
             </ButtonArea>
             </form>
-        </Page>
+        </div>
     );
 };
 export default Formlist;

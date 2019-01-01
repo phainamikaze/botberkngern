@@ -276,3 +276,7 @@ a {
 #oops-subtitle {
   color: #888;
 }
+
+.rtf.open .rtf--ab__c > span {
+  transition: ease-in-out opacity 0.2s;
+  opacity: 0.9; }

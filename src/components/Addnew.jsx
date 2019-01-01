@@ -11,10 +11,11 @@ import { ButtonArea,
   Label,
   Page
 } from 'react-weui';
+
 export default class Addnew extends React.Component {
   render() {
     return (
-    <Page transition={false}>
+        <div id="invite">
         <CellsTitle>เพิ่มใหม่</CellsTitle>
         <Form>
             <FormCell>
@@ -37,9 +38,11 @@ export default class Addnew extends React.Component {
         <CellsTips>เพิ่มใหม่</CellsTips>
         <ButtonArea>
             <Button>
-                OK
+                OKa
             </Button>
         </ButtonArea>
-    </Page>)
+        
+        </div>
+    )
   }
 };

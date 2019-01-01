@@ -4,7 +4,7 @@ import Oops from './components/Oops';
 import Addnew from './components/Addnew';
 
 import Createlist from './pages/Createlist';
-import Itemslist from './pages/Itemslist';
+import Itemslist from './containers/Itemslist';
 import { BrowserRouter } from 'react-router-dom';
 
 const App = () => (
@@ -12,7 +12,7 @@ const App = () => (
     <div>
       <Route path="/" exact component={Addnew} />
       <Route path="/createlist" component={Createlist} />
-      <Route path="/itemslist" component={Itemslist} />
+      <Route path="/itemslist/:listid" component={Itemslist} />
     </div>
   </BrowserRouter>
 );
