@@ -1,10 +1,7 @@
 const listReducer = (state = {
-    id:1,
+    id:0,
     name: "ลิสไม่มีชื่อ",
-    filter: "NEW",
-    items:[
-        1,2,3
-    ],
+    owner:false
 }, action) => {
     switch (action.type) {
         case "CREATE_LIST":
@@ -13,8 +10,10 @@ const listReducer = (state = {
             //     title: action.payload
             // };
             break;
+        default:
+            return state;
     }
-    return state;
+    
 };
 
 export default listReducer;

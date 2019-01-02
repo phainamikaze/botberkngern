@@ -8,38 +8,41 @@ import {
 import itemActions from '../actions/itemActions';
 import menuActions from '../actions/menuActions';
 import Addnew from '../components/Addnew';
+import Listdetail from '../components/Listdetail';
 
 class Itemslist extends React.Component {
   componentDidMount() {
     console.log(this.props.match.params.listid)
     const { dispatch } = this.props;
-    dispatch(menuActions.showMemu());
+    dispatch(menuActions.show("FAB"));
+    dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
   }
 
   render() {
     let footpage;
 
-    if(this.props.menu === 'FaAB'){
+    if(this.props.menu === 'FAB'){
       footpage = (
-        <FabMenu showAddnew={this.props.showAddnew}/>
+        <FabMenu show={this.props.show}/>
       );
-    }else if(this.props.menu === 'FAB'){
+    }else if(this.props.menu === 'ADDNEW'){
       footpage = (
-        <Addnew/>
+        <Addnew show={this.props.show}/>
+      );
+    }else if(this.props.menu === 'DETAIL'){
+      footpage = (
+        <Listdetail show={this.props.show}/>
       );
     }
     return(
-    <div>
+    <div id="itemslist">
       <section>
       <Panel>
-      <section>
-      
-        <Items items={[]} /> 
-      </section>
-       </Panel>
-       
-      
-       {footpage}
+        <section>
+          <Items items={this.props.items} /> 
+        </section>
+      </Panel>
+      {footpage}
     </section>
     </div>
     );
@@ -47,7 +50,8 @@ class Itemslist extends React.Component {
 };
 
 const mapStateToProps = (state, ownProps) => ({
-  items: state.list.items,
+  items: state.items.items,
+  filter:state.items.filter,
   menu: state.menu
 })
 const mapDispatchToProps = (dispatch,ownProps) => {
@@ -55,8 +59,8 @@ const mapDispatchToProps = (dispatch,ownProps) => {
       getListitems: (listid,filter) => {
         dispatch(itemActions.getItems(listid,filter));
       },
-      showAddnew: () => {
-        dispatch(menuActions.showAddnew());
+      show: (params) => {
+        dispatch(menuActions.show(params));
       },
       dispatch
   };

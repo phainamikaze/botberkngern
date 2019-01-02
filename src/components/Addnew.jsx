@@ -9,14 +9,15 @@ import { ButtonArea,
   FormCell,
   Input,
   Label,
-  Page
+  Icon
 } from 'react-weui';
 
-export default class Addnew extends React.Component {
-  render() {
+const Addnew  = (props)=>{
     return (
-        <div id="invite">
-        <CellsTitle>เพิ่มใหม่</CellsTitle>
+        <div className="footer">
+        <CellsTitle>เพิ่มใหม่
+            <Icon value="clear" onClick={()=>{props.show("FAB")}} />
+        </CellsTitle>
         <Form>
             <FormCell>
                 <CellHeader>
@@ -44,5 +45,5 @@ export default class Addnew extends React.Component {
         
         </div>
     )
-  }
 };
+export default Addnew

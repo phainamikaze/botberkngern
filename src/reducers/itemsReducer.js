@@ -3,16 +3,15 @@ const itemsReducer = (state = {
     items:[],
 }, action) => {
     switch (action.type) {
-        case "CREATE_LIST":
-            // state = {
-            //     ...state,
-            //     title: action.payload
-            // };
-            break;
+        case "GETITEMS_SUCESS":
+            return {
+                items:action.items,
+                filter:action.filter
+            }
         default:
-            break;
+            return state;
     }
-    return state;
+    
 };
 
 export default itemsReducer;

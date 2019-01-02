@@ -4,14 +4,13 @@ import {
     CellsTitle
 } from 'react-weui';
 import Item from './Item';
-const Items = () => {
-    const myitems = [0,1,2,2,3,3,3,3,3,,3,3,3,3,33];
+const Items = ({items}) => {
     return (
         <div>
         <CellsTitle>List with Icon & Link</CellsTitle>
         <Cells>
-        {myitems.map(myitem => (
-            <Item/>
+        {items.map(myitem => (
+            <Item key={myitem}/>
         ))}
         </Cells>
         </div>

@@ -10,7 +10,7 @@ function getItems(listid,filter){
         return itemServices.getItems(listid,filter)
             .then(
                 items => { 
-                    dispatch(success(items));
+                    dispatch(success(items,filter));
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -19,7 +19,7 @@ function getItems(listid,filter){
             );
     };
     function request(listid,filter) { return { type: "GETITEMS_REQUEST", listid,filter } }
-    function success(items) { return { type: "GETITEMS_SUCESS", items } }
+    function success(items,filter) { return { type: "GETITEMS_SUCESS", items,filter } }
     function failure(error) { return { type: "GETITEMS_FAILURE", error } }
 }
 

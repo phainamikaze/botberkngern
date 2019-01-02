@@ -8,7 +8,6 @@ import { ButtonArea,
   FormCell,
   Input,
   Label,
-  Page,
   CellFooter,
   Icon
 } from 'react-weui';
