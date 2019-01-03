@@ -3,24 +3,24 @@ import { listService } from '../services/listServices';
 export const listActions = {
     createlist
 }
-function createlist(history){
+function createlist(viewerId,title,history){
     return dispatch => {
-        //dispatch(request({ username }));
-
-        return listService.createlist()
-            .then(
+        dispatch(request());
+        return listService.createlist(
+                viewerId,
+                title
+            ).then(
                 listid => { 
-                    dispatch(success(listid));
-                    history.push('/itemslist');
+                    dispatch(success());
+                    history.push('/itemslist/'+listid);
                 },
                 error => {
-                    history.push('/test');
-                    // dispatch(failure(error.toString()));
+                    dispatch(failure(error.toString()));
                     // dispatch(alertActions.error(error.toString()));
                 }
             );
     };
-    //function request(user) { return { type: userConstants.LOGIN_REQUEST, listid } }
-    function success(listid) { return { type: "OK", listid } }
-    //function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+    function request() { return { type: "LOADER_REQUEST"} }
+    function success() { return { type: "LOADER_SUCCESS"} }
+    function failure(error) { return { type: "LOADER_FAILURE", error } }
 }

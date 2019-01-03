@@ -5,11 +5,13 @@ import thunk from "redux-thunk";
 import list from "./reducers/listReducer";
 import items from "./reducers/itemsReducer";
 import menu from "./reducers/menuReducer";
+import loader from "./reducers/loaderReducer";
 export default createStore(
     combineReducers({
         list,
         items,
-        menu
+        menu,
+        loader
     }),
     applyMiddleware(logger,thunk)
 );

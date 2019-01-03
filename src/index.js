@@ -10,12 +10,15 @@ import * as serviceWorker from './serviceWorker';
 import 'weui';
 import 'react-weui/build/packages/react-weui.css';
 
-window.attachApp = () => {
+window.attachApp = (viewerId, threadType) => {
   let appRender;
-  if (true) {
+  if (viewerId) {
     appRender = (
       <Provider store={store}>
-        <App />
+        <App 
+          viewerId={viewerId}
+          threadType={threadType}
+        />
       </Provider>
     );
   } else {

@@ -10,12 +10,15 @@
     <script>
       window.extAsyncInit = function() {
         MessengerExtensions.getContext(
-          '1898084047093164',
+          '2240477206240741',
           function success(context) {
-            window.attachApp();
-            console.log('okkkkk');
+            window.attachApp(
+              context.psid,
+              context.thread_type
+            );
           }, function error(err) {
-            window.attachApp();
+            const userId = Math.floor(Math.random() * 4) + 1;
+            window.attachApp(userId);
             console.log('errrrr');
           });
       };

@@ -12,11 +12,18 @@ import { ButtonArea,
   Icon
 } from 'react-weui';
 const Formlist = (props) => {
-    
+    let loader;
+    if (props.loader === "REQUEST"){
+        loader = <i className='weui-loading' />;
+    }else if (props.loader === "REQUEST"){
+        loader = <Icon value="success" />;
+    }else if (props.loader === "FAILURE"){
+        loader = <Icon value="warn" />;
+    }
     return (
         <div>
         {/* Empty action attr enables 'Go' Submit Button on iOS Keyboard */}
-            <form action="true" onSubmit={props.onSubmit} >
+            <form onSubmit={props.onSubmit} >
             <CellsTitle>สร้างลิสต์</CellsTitle>   
             <FormCell>
                 <CellHeader>
@@ -26,7 +33,7 @@ const Formlist = (props) => {
                     <Input type="text" placeholder="กรอกชื่อลิสต์" />
                 </CellBody>
                 <CellFooter>
-                    <Icon value="warn" />
+                    { loader }
                 </CellFooter>
             </FormCell>
             
