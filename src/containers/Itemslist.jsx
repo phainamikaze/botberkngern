@@ -10,7 +10,7 @@ import menuActions from '../actions/menuActions';
 import listActions from '../actions/listActions';
 import Addnew from '../components/Addnew';
 import Listdetail from '../components/Listdetail';
-
+import Bmodal from '../components/Bmodal';
 class Itemslist extends React.Component {
   componentDidMount() {
     const { dispatch } = this.props;
@@ -31,9 +31,10 @@ class Itemslist extends React.Component {
         <Addnew show={this.props.show} onSubmit={this.props.additem}/>
       );
     }else if(this.props.menu === 'DETAIL'){
-      footpage = (
-        <Listdetail show={this.props.show}/>
-      );
+      // footpage = (
+      //   <Listdetail show={this.props.show}/>
+      // );
+      footpage = <Bmodal />
     }
     return(
     <div id="itemslist">
