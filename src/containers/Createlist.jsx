@@ -1,6 +1,6 @@
 import React from 'react';
 import Formlist from '../components/Formlist';
-import { listActions } from '../actions/listActions';
+import listActions from '../actions/listActions';
 import { withRouter } from 'react-router-dom';
 import {connect} from "react-redux";
 

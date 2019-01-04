@@ -7,15 +7,16 @@ import {
 } from 'react-weui';
 import itemActions from '../actions/itemActions';
 import menuActions from '../actions/menuActions';
+import listActions from '../actions/listActions';
 import Addnew from '../components/Addnew';
 import Listdetail from '../components/Listdetail';
 
 class Itemslist extends React.Component {
   componentDidMount() {
-    console.log(this.props.match.params.listid)
     const { dispatch } = this.props;
-    dispatch(menuActions.show("FAB"));
-    dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
+    //dispatch(menuActions.show("FAB"));
+    dispatch(listActions.getlist(this.props.match.params.listid));
+    //dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
   }
 
   render() {
@@ -27,7 +28,7 @@ class Itemslist extends React.Component {
       );
     }else if(this.props.menu === 'ADDNEW'){
       footpage = (
-        <Addnew show={this.props.show}/>
+        <Addnew show={this.props.show} onSubmit={this.props.additem}/>
       );
     }else if(this.props.menu === 'DETAIL'){
       footpage = (
@@ -52,7 +53,9 @@ class Itemslist extends React.Component {
 const mapStateToProps = (state, ownProps) => ({
   items: state.items.items,
   filter:state.items.filter,
-  menu: state.menu
+  menu: state.menu,
+  list:state.list,
+  isOwn: true
 })
 const mapDispatchToProps = (dispatch,ownProps) => {
   return {
@@ -61,6 +64,15 @@ const mapDispatchToProps = (dispatch,ownProps) => {
       },
       show: (params) => {
         dispatch(menuActions.show(params));
+      },
+      additem: (event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+        dispatch(itemActions.additem(
+          ownProps.listid,
+          event.target[0].value,
+          event.target[1].value
+        ));
       },
       dispatch
   };

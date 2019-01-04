@@ -10,7 +10,7 @@ const Items = ({items}) => {
         <CellsTitle>List with Icon & Link</CellsTitle>
         <Cells>
         {items.map(myitem => (
-            <Item key={myitem}/>
+            <Item key={myitem.createtime} data={myitem}/>
         ))}
         </Cells>
         </div>

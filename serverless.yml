@@ -45,6 +45,7 @@ provider:
 # you can define service wide environment variables here
   environment:
     LIST_TABLE: BBG-LIST
+    ITEM_TABLE: BBG-ITEM
 
 # you can add packaging information here
 package:
@@ -58,9 +59,38 @@ functions:
     handler: functions/createlist/index.handler
     events:
       - http:
-          path: createlist
+          path: list
           method: post
           cors: true
+  getlist:
+    handler: functions/getlist/index.handler
+    events:
+      - http:
+          path: list/{id}
+          method: get
+          cors: true
+          request: 
+            parameters: 
+              paths: 
+                id: true
+  additem:
+    handler: functions/additem/index.handler
+    events:
+      - http:
+          path: item
+          method: post
+          cors: true
+  getitems:
+    handler: functions/getitems/index.handler
+    events:
+      - http:
+          path: item/{id}
+          method: get
+          cors: true
+          request: 
+            parameters: 
+              paths: 
+                id: true
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
@@ -169,3 +199,9 @@ resources:
             - StaticWebHosting
             - DomainName
       Description: Name of S3 bucket to hold website content
+custom:
+  serverless-offline:
+    port: 4000
+
+plugins:
+  - serverless-offline

@@ -15,6 +15,7 @@ import { ButtonArea,
 const Addnew  = (props)=>{
     return (
         <div className="footer">
+        <from onSubmit={props.onSubmit}>
         <CellsTitle>เพิ่มใหม่
             <Icon value="clear" onClick={()=>{props.show("FAB")}} />
         </CellsTitle>
@@ -42,7 +43,7 @@ const Addnew  = (props)=>{
                 OKa
             </Button>
         </ButtonArea>
-        
+        </from>
         </div>
     )
 };

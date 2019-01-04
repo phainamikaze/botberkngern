@@ -1,7 +1,8 @@
 import { itemServices } from '../services/itemServices';
 
 const itemActions = {
-    getItems
+    getItems,
+    additem
 }
 
 function getItems(listid,filter){
@@ -22,5 +23,22 @@ function getItems(listid,filter){
     function success(items,filter) { return { type: "GETITEMS_SUCESS", items,filter } }
     function failure(error) { return { type: "GETITEMS_FAILURE", error } }
 }
-
+function additem(listid,amount,details){
+    return dispatch => {
+        dispatch(request());
+        return itemServices.additem(listid,amount,details)
+            .then(
+                items => { 
+                    dispatch(success(items));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    // dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+    function request() { return { type: "ADDITEM_REQUEST"} }
+    function success(item) { return { type: "ADDITEM_SUCCESS", item } }
+    function failure(error) { return { type: "ADDITEM_FAILURE", error } }
+}
 export default itemActions

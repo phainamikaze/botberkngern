@@ -1,14 +1,10 @@
 //import fetch from 'cross-fetch';
 import config from "../config";
 export const listService = {
-    createlist
+    createlist,
+    getlist
 };
 function createlist(owner,title){
-    return createlistApi(owner,title);
-}
-
-
-function createlistApi(owner,title){
     return fetch(config.API_ENDPOINT+"/createlist", {
         method: "post",
         headers: {
@@ -18,14 +14,36 @@ function createlistApi(owner,title){
             title,
             owner
         })
-    }).then((res)=>{
-        return res.id
+    }).then(res => {
+        if (res.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return res.json();
+    }).then(body => {
+        return(body);
     })
 }
-function test(){
-    return new Promise((resolve, reject) => {
-        setTimeout(function(){
-            reject('132')
-        },5000)
-    });
+
+
+function getlist(listid){
+    return fetch(config.API_ENDPOINT+"/list/"+listid, {
+        method: "get",
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    }).then(res => {
+        if (res.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return res.json();
+    }).then(body => {
+        return(body);
+    })
 }
+// function test(){
+//     return new Promise((resolve, reject) => {
+//         setTimeout(function(){
+//             reject('132')
+//         },5000)
+//     });
+// }

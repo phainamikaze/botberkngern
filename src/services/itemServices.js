@@ -1,7 +1,41 @@
-
+import config from "../config";
 export const itemServices = {
-    getItems
+    getItems,
+    additem
 };
 function getItems(listid,filter){
-    return Promise.resolve([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]);
+    return fetch(config.API_ENDPOINT+"/item/"+listid+"?filter="+filter, {
+        method: "get",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    }).then(res => {
+        if (res.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return res.json();
+    }).then(body => {
+        return(body.items);
+    })
+}
+
+function additem(listid,amount,details){
+    return fetch(config.API_ENDPOINT+"/additem", {
+        method: "post",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            listid,
+            amount,
+            details
+        })
+    }).then(res => {
+        if (res.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return res.json();
+    }).then(body => {
+        return(body);
+    })
 }
