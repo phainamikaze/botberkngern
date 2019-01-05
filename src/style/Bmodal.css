@@ -43,7 +43,8 @@
   }
   
   .modal-header {
-    padding: 2px 16px;
+    height: 44px;
+    padding: 0px 16px;
     background-color: white;
     color: white;
   }

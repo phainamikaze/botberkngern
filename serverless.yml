@@ -80,6 +80,20 @@ functions:
           path: item
           method: post
           cors: true
+  deleteitem:
+    handler: functions/deleteitem/index.handler
+    events:
+      - http:
+          path: item
+          method: delete
+          cors: true
+  updateitem:
+    handler: functions/updateitem/index.handler
+    events:
+      - http:
+          path: item
+          method: patch
+          cors: true
   getitems:
     handler: functions/getitems/index.handler
     events:

@@ -11,6 +11,7 @@ import listActions from '../actions/listActions';
 import Additem from '../components/Additem';
 import Listdetail from '../components/Listdetail';
 import Bmodal from '../components/Bmodal';
+import Itemdetails from '../components/Itemdetails';
 class Itemslist extends React.Component {
   componentDidMount() {
     
@@ -24,17 +25,25 @@ class Itemslist extends React.Component {
   render() {
     let footpage;
 
-    if(this.props.menu === 'FAB'){
+    if(this.props.menu.status === 'FAB'){
       footpage = (
         <FabMenu show={this.props.show}/>
       );
-    }else if(this.props.menu === 'ADDNEW'){
+    }else if(this.props.menu.status === 'ADDNEW'){
       footpage = (
         <Bmodal show={this.props.show}>
           <Additem onSubmit={this.props.additem}/>
         </Bmodal>
       );
-    }else if(this.props.menu === 'DETAIL'){
+    }else if(this.props.menu.status === 'ITEMDETAIL'){
+      footpage = (
+        <Bmodal show={this.props.show}>
+          <Itemdetails data={this.props.menu.payload} 
+            onDelete={this.props.deleteitem}
+          />
+        </Bmodal>
+      );
+    }else if(this.props.menu.status === 'LISTDETAIL'){
       // footpage = (
       //   <Listdetail show={this.props.show}/>
       // );
@@ -45,7 +54,11 @@ class Itemslist extends React.Component {
       <section>
       <Panel>
         <section>
-          <Items items={this.props.items} list={this.props.list} /> 
+          <Items 
+            items={this.props.items} 
+            list={this.props.list} 
+            itemdetail={this.props.itemdetail}
+          /> 
         </section>
       </Panel>
       {footpage}
@@ -78,6 +91,21 @@ const mapDispatchToProps = (dispatch,ownProps) => {
           event.target[0].value,
           event.target[1].value
         ));
+      },
+      itemdetail: (data)=>{
+        dispatch(menuActions.show(
+          "ITEMDETAIL",
+          data
+        ));
+      },
+      deleteitem: (listid,createtime)=>{
+        dispatch(itemActions.deleteitem(
+          listid,
+          createtime
+        ));
+      },
+      updateitem: ()=>{
+
       },
       dispatch
   };

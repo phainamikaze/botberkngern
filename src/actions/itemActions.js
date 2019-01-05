@@ -2,7 +2,10 @@ import { itemServices } from '../services/itemServices';
 import menuActions from './menuActions';
 const itemActions = {
     getItems,
-    additem
+    additem,
+    deleteitem,
+    paiditem,
+    confirmitem
 }
 
 function getItems(listid,filter){
@@ -41,5 +44,62 @@ function additem(listid,amount,details){
     function request() { return { type: "ADDITEM_REQUEST"} }
     function success(item) { return { type: "ADDITEM_SUCCESS", item } }
     function failure(error) { return { type: "ADDITEM_FAILURE", error } }
+}
+function deleteitem(listid,createtime){
+    return dispatch => {
+        dispatch(menuActions.show("SHOW_MENU"));
+        dispatch(request());
+        return itemServices.deleteitem(listid,createtime)
+            .then(
+                item => { 
+                    dispatch(success(item));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    // dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+    function request() { return { type: "DELITEM_REQUEST"} }
+    function success(item) { return { type: "DELITEM_SUCCESS", item } }
+    function failure(error) { return { type: "DELITEM_FAILURE", error } }
+}
+function paiditem(listid,createtime){
+    return dispatch => {
+        dispatch(menuActions.show("SHOW_MENU"));
+        dispatch(request());
+        return itemServices.paiditem(listid,createtime)
+            .then(
+                item => { 
+                    dispatch(success(item));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    // dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+    function request() { return { type: "PAIDITEM_REQUEST"} }
+    function success(item) { return { type: "PAIDITEM_SUCCESS", item } }
+    function failure(error) { return { type: "PAIDITEM_FAILURE", error } }
+}
+function confirmitem(listid,createtime){
+    return dispatch => {
+        dispatch(menuActions.show("SHOW_MENU"));
+        dispatch(request());
+        return itemServices.confirmitem(listid,createtime)
+            .then(
+                item => { 
+                    dispatch(success(item));
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    // dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+    function request() { return { type: "CONFIRMITEM_REQUEST"} }
+    function success(item) { return { type: "CONFIRMITEM_SUCCESS", item } }
+    function failure(error) { return { type: "CONFIRMITEM_FAILURE", error } }
 }
 export default itemActions

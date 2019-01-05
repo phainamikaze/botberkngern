@@ -7,11 +7,11 @@ import {
     CellBody,
     CellFooter,
 } from 'react-weui';
-const Item = ({data}) => {
+const Item = ({data,onClick}) => {
     TimeAgo.addLocale(en);
     const timeAgo = new TimeAgo('en-US');
     return (
-        <Cell access onClick={()=>{console.log('aaa')}}>
+        <Cell access onClick={()=>{onClick(data)}}>
             <CellHeader>
             {data.status}
             </CellHeader>
