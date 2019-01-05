@@ -5,7 +5,7 @@ export const listService = {
     getlist
 };
 function createlist(owner,title){
-    return fetch(config.API_ENDPOINT+"/createlist", {
+    return fetch(config.API_ENDPOINT+"/list", {
         method: "post",
         headers: {
             'Content-Type': 'application/json'

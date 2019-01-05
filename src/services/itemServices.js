@@ -20,7 +20,7 @@ function getItems(listid,filter){
 }
 
 function additem(listid,amount,details){
-    return fetch(config.API_ENDPOINT+"/additem", {
+    return fetch(config.API_ENDPOINT+"/item", {
         method: "post",
         headers: {
             'Content-Type': 'application/json'
@@ -36,6 +36,6 @@ function additem(listid,amount,details){
         }
         return res.json();
     }).then(body => {
-        return(body);
+        return(body.item);
     })
 }

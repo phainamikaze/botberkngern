@@ -1,5 +1,5 @@
 import { itemServices } from '../services/itemServices';
-
+import menuActions from './menuActions';
 const itemActions = {
     getItems,
     additem
@@ -25,11 +25,12 @@ function getItems(listid,filter){
 }
 function additem(listid,amount,details){
     return dispatch => {
+        dispatch(menuActions.show("SHOW_MENU"));
         dispatch(request());
         return itemServices.additem(listid,amount,details)
             .then(
-                items => { 
-                    dispatch(success(items));
+                item => { 
+                    dispatch(success(item));
                 },
                 error => {
                     dispatch(failure(error.toString()));

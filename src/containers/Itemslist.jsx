@@ -8,15 +8,17 @@ import {
 import itemActions from '../actions/itemActions';
 import menuActions from '../actions/menuActions';
 import listActions from '../actions/listActions';
-import Addnew from '../components/Addnew';
+import Additem from '../components/Additem';
 import Listdetail from '../components/Listdetail';
 import Bmodal from '../components/Bmodal';
 class Itemslist extends React.Component {
   componentDidMount() {
+    
     const { dispatch } = this.props;
     //dispatch(menuActions.show("FAB"));
     dispatch(listActions.getlist(this.props.match.params.listid));
     //dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
+    console.log(this.props);
   }
 
   render() {
@@ -28,7 +30,9 @@ class Itemslist extends React.Component {
       );
     }else if(this.props.menu === 'ADDNEW'){
       footpage = (
-        <Addnew show={this.props.show} onSubmit={this.props.additem}/>
+        <Bmodal show={this.props.show}>
+          <Additem onSubmit={this.props.additem}/>
+        </Bmodal>
       );
     }else if(this.props.menu === 'DETAIL'){
       // footpage = (
@@ -41,7 +45,7 @@ class Itemslist extends React.Component {
       <section>
       <Panel>
         <section>
-          <Items items={this.props.items} /> 
+          <Items items={this.props.items} list={this.props.list} /> 
         </section>
       </Panel>
       {footpage}
@@ -70,7 +74,7 @@ const mapDispatchToProps = (dispatch,ownProps) => {
         event.preventDefault();
         event.stopPropagation();
         dispatch(itemActions.additem(
-          ownProps.listid,
+          ownProps.match.params.listid,
           event.target[0].value,
           event.target[1].value
         ));

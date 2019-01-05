@@ -4,10 +4,10 @@ import {
     CellsTitle
 } from 'react-weui';
 import Item from './Item';
-const Items = ({items}) => {
+const Items = ({items,list}) => {
     return (
         <div>
-        <CellsTitle>List with Icon & Link</CellsTitle>
+        <CellsTitle>{list.title}</CellsTitle>
         <Cells>
         {items.map(myitem => (
             <Item key={myitem.createtime} data={myitem}/>

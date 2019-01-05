@@ -29,7 +29,7 @@
   
   /* The Close Button */
   .close {
-    color: white;
+    color: #000;
     float: right;
     font-size: 28px;
     font-weight: bold;
@@ -44,17 +44,12 @@
   
   .modal-header {
     padding: 2px 16px;
-    background-color: #5cb85c;
+    background-color: white;
     color: white;
   }
   
-  .modal-body {padding: 2px 16px;}
+
   
-  .modal-footer {
-    padding: 2px 16px;
-    background-color: #5cb85c;
-    color: white;
-  }
   
   /* Add Animation */
   @-webkit-keyframes slideIn {
