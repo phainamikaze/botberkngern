@@ -52,6 +52,7 @@ package:
   include:
     - functions/**
   exclude:
+    - build/**
     - node_modules/**
 
 functions:

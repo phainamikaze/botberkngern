@@ -40,6 +40,8 @@ class Itemslist extends React.Component {
         <Bmodal show={this.props.show}>
           <Itemdetails data={this.props.menu.payload} 
             onDelete={this.props.deleteitem}
+            onConfirm={this.props.confirmitem}
+            onPaid={this.props.paiditem}
           />
         </Bmodal>
       );
@@ -104,8 +106,17 @@ const mapDispatchToProps = (dispatch,ownProps) => {
           createtime
         ));
       },
-      updateitem: ()=>{
-
+      confirmitem: (listid,createtime)=>{
+        dispatch(itemActions.confirmitem(
+          listid,
+          createtime
+        ));
+      },
+      paiditem: (listid,createtime)=>{
+        dispatch(itemActions.paiditem(
+          listid,
+          createtime
+        ));
       },
       dispatch
   };

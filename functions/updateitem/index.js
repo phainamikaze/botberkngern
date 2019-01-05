@@ -13,6 +13,14 @@ module.exports.handler = async (event, context) => {
       ownlist: body.listid,
       createtime: body.createtime
     },
+    UpdateExpression: "set #status = :status",
+    ExpressionAttributeNames:{
+      "#status":"status",
+    },
+    ExpressionAttributeValues:{
+        ":status":body.newstatus,
+    },
+    ReturnValues:"ALL_NEW"
   };
   try {
     const data = await docClient.update(params).promise();
@@ -22,7 +30,7 @@ module.exports.handler = async (event, context) => {
         "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
       },
-      body: JSON.stringify({ item: params.Key }) };
+      body: JSON.stringify({ item: data.Attributes }) };
   } catch(error) {
     return {
       statusCode: 400,

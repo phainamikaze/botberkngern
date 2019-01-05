@@ -13,7 +13,7 @@ import {
     Icon
 } from 'react-weui';
 
-const Itemdetails  = ({data,onDelete})=>{
+const Itemdetails  = ({data,onDelete,onConfirm})=>{
     return (
         <div id="itemdetails">
         <Preview>
@@ -29,7 +29,7 @@ const Itemdetails  = ({data,onDelete})=>{
             </PreviewBody>
             <ButtonArea direction="horizontal">
                 <Button type="warn" onClick={()=>{onDelete(data.ownlist,data.createtime)}}>ลบ</Button>
-                <Button type="primary">ได้รับแล้ว</Button>
+                <Button type="primary" onClick={()=>{onConfirm(data.ownlist,data.createtime)}}>ได้รับแล้ว</Button>
             </ButtonArea>
         </Preview>
         </div>
