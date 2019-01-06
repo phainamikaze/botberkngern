@@ -20,6 +20,7 @@ service: BBG # NOTE: update this with your service name
 provider:
   name: aws
   runtime: nodejs8.10
+  memorySize: 128
 
 # you can overwrite defaults here
   stage: dev
@@ -46,6 +47,9 @@ provider:
   environment:
     LIST_TABLE: BBG-LIST
     ITEM_TABLE: BBG-ITEM
+    WEBHOOK_TOKEN: 34iEUtGvPKbyzRQuMFDCa8jBZqdnAcS9s1
+    PAGE_ACCESS_TOKEN: xxx
+    APP_URL: https://d194k4oxn9lq63.cloudfront.net
 
 # you can add packaging information here
 package:
@@ -56,6 +60,18 @@ package:
     - node_modules/**
 
 functions:
+  verifytoken:
+    handler: functions/verifytoken/index.handler
+    events:
+      - http:
+          path: webhook
+          method: get
+  webhook:
+    handler: functions/webhook/index.handler
+    events:
+      - http:
+          path: webhook
+          method: post
   createlist:
     handler: functions/createlist/index.handler
     events:
