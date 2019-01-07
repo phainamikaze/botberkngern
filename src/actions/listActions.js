@@ -14,7 +14,8 @@ function createlist(viewerId,title,history){
             ).then(
                 body => { 
                     dispatch(success());
-                    history.push('/itemslist/'+body.id);
+                    window.MessengerExtensions.requestCloseBrowser(null, null);
+                    //history.push('/itemslist/'+body.id);
                 },
                 error => {
                     dispatch(failure(error.toString()));
