@@ -1,29 +1,30 @@
 import React from 'react';
 import { 
+    ButtonArea,
+    Button,
     Preview,
     PreviewHeader,
-    PreviewItem,
     PreviewBody,
-    PreviewFooter,
-    PreviewButton
+    PreviewItem,
 } from 'react-weui';
-
-const Listdetail  = (props)=>{
+const Listdetail  = ({data})=>{
     return (
-        <div className="footer">
+        <div id="listdetails">
         <Preview>
             <PreviewHeader>
-                <PreviewItem label="Total" value="$49.99" />
+                <PreviewItem label={data.title} value={"฿"+data.amount} />
             </PreviewHeader>
             <PreviewBody>
-                <PreviewItem label="Product" value="Name" />
+                <PreviewItem label="" value={ "เพิ่มเมื่อ "+(new Date(Number(data.createtime))).toLocaleString() } />
+                <PreviewItem label="Description" value="Product Description" />
+                <PreviewItem label="Description" value="Product Description" />
                 <PreviewItem label="Description" value="Product Description" />
                 <PreviewItem label="Details" value="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. " />
             </PreviewBody>
-            <PreviewFooter>
-                <PreviewButton >Action</PreviewButton>
-                <PreviewButton primary>Action</PreviewButton>
-            </PreviewFooter>
+            <ButtonArea direction="horizontal">
+                <Button type="warn" onClick={()=>{}}>ลบรายการ {data.title}</Button>
+                <Button type="primary" onClick={()=>{}}>ยืนยันว่าได้รับแล้ว</Button>
+            </ButtonArea>
         </Preview>
         </div>
     )

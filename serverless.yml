@@ -98,6 +98,13 @@ functions:
             parameters: 
               paths: 
                 id: true
+  updatelistsharedwith:
+    handler: functions/updatelistsharedwith/index.handler
+    events:
+      - http:
+          path: list/updatesharedwith
+          method: post
+          cors: true
   additem:
     handler: functions/additem/index.handler
     events:

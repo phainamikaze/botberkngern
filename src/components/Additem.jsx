@@ -9,8 +9,7 @@ import {
     Form,
     FormCell,
     Input,
-    Label,
-    Icon
+    Label
 } from 'react-weui';
 
 const Additem  = (props)=>{
@@ -40,7 +39,7 @@ const Additem  = (props)=>{
         
         <CellsTips>เพิ่มใหม่</CellsTips>
         <ButtonArea direction="horizontal">
-            <Button type="primary">เพิ่ม</Button>
+            <Button type="primary" style={{backgroundColor:"#0083FF"}}>เพิ่ม</Button>
         </ButtonArea>
         </form>
         </div>

@@ -2,7 +2,8 @@
 import config from "../config";
 export const listService = {
     createlist,
-    getlist
+    getlist,
+    updateSharedwith
 };
 function createlist(owner,title){
     return fetch(config.API_ENDPOINT+"/list", {
@@ -31,6 +32,26 @@ function getlist(listid){
         headers: {
             'Content-Type': 'application/json'
         }
+    }).then(res => {
+        if (res.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return res.json();
+    }).then(body => {
+        return(body);
+    })
+}
+
+function updateSharedwith(listid,viewerId){
+    return fetch(config.API_ENDPOINT+"/list/updatesharedwith", {
+        method: "post",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            listid,
+            viewerId
+        })
     }).then(res => {
         if (res.status >= 400) {
             throw new Error("Bad response from server");

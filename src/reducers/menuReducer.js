@@ -8,7 +8,8 @@ const menuReducer = (state = {
             };
         case "SHOW_LISTDETAIL":
             return {
-                status:"LISTDETAIL"
+                status:"LISTDETAIL",
+                payload:action.payload
             };
         case "SHOW_ITEMDETAIL":
             return {

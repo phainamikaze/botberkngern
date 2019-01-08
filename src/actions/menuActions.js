@@ -10,7 +10,8 @@ function show(params,payload=null){
         };
     }else if(params==="LISTDETAIL"){
         return {
-            type: "SHOW_LISTDETAIL"
+            type: "SHOW_LISTDETAIL",
+            payload
         };
     }else if(params==="ITEMDETAIL"){
         return {

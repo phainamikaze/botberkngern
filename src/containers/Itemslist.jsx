@@ -12,14 +12,21 @@ import Additem from '../components/Additem';
 import Listdetail from '../components/Listdetail';
 import Bmodal from '../components/Bmodal';
 import Itemdetails from '../components/Itemdetails';
+import store from '../store';
 class Itemslist extends React.Component {
-  componentDidMount() {
-    
+  componentWillMount() {
+    const { viewer } = store.getState();
     const { dispatch } = this.props;
-    //dispatch(menuActions.show("FAB"));
-    dispatch(listActions.getlist(this.props.match.params.listid));
+    dispatch(listActions.getlist(
+      this.props.match.params.listid,
+      viewer.id
+      ));
     //dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
-    console.log(this.props);
+
+  }
+  componentDidMount() {
+
+    
   }
 
   render() {
@@ -27,7 +34,7 @@ class Itemslist extends React.Component {
 
     if(this.props.menu.status === 'FAB'){
       footpage = (
-        <FabMenu show={this.props.show}/>
+        <FabMenu show={this.props.show} listid={this.props.match.params.listid}/>
       );
     }else if(this.props.menu.status === 'ADDNEW'){
       footpage = (
@@ -39,6 +46,7 @@ class Itemslist extends React.Component {
       footpage = (
         <Bmodal show={this.props.show}>
           <Itemdetails data={this.props.menu.payload} 
+            viewer={this.props.viewer}
             onDelete={this.props.deleteitem}
             onConfirm={this.props.confirmitem}
             onPaid={this.props.paiditem}
@@ -46,10 +54,13 @@ class Itemslist extends React.Component {
         </Bmodal>
       );
     }else if(this.props.menu.status === 'LISTDETAIL'){
-      // footpage = (
-      //   <Listdetail show={this.props.show}/>
-      // );
-      footpage = <Bmodal />
+      footpage = (
+        <Bmodal show={this.props.show}>
+          <Listdetail data={this.props.list} 
+
+          />
+        </Bmodal>
+      );
     }
     return(
     <div id="itemslist">
@@ -75,7 +86,7 @@ const mapStateToProps = (state, ownProps) => ({
   filter:state.items.filter,
   menu: state.menu,
   list:state.list,
-  isOwn: true
+  viewer: state.viewer
 })
 const mapDispatchToProps = (dispatch,ownProps) => {
   return {

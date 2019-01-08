@@ -1,5 +1,6 @@
 import { listService } from '../services/listServices';
 import itemActions  from './itemActions';
+import viewerActions from './viewerActions';
 
 const listActions = {
     createlist,
@@ -28,7 +29,7 @@ function createlist(viewerId,title,history){
     function failure(error) { return { type: "LOADER_FAILURE", error } }
 }
 
-function getlist(listid){
+function getlist(listid,viewerId=null){
     return dispatch => {
         dispatch(request());
         return listService.getlist(
@@ -36,6 +37,21 @@ function getlist(listid){
             ).then(
                 body => { 
                     dispatch(success(body.list));
+                    if(!(viewerId===null)){
+                        if(body.list.owner===viewerId){
+                            dispatch(viewerActions.setOwn(true));
+                            dispatch(viewerActions.setsharedwithMe(false));
+                        }else if(!body.list.sharedwith){
+                            dispatch(updateSharedwith(listid,viewerId));
+                        }else if(body.list.sharedwith===viewerId){
+                            dispatch(viewerActions.setOwn(false));
+                            dispatch(viewerActions.setsharedwithMe(true));
+                        }else{
+                            dispatch(viewerActions.setOwn(false));
+                            dispatch(viewerActions.setsharedwithMe(false));
+                        }
+                    }
+                        
                     dispatch(itemActions.getItems(listid,"NEW"));
                 },
                 error => {
@@ -48,4 +64,14 @@ function getlist(listid){
     function success(list) { return { type: "GETLIST_SUCCESS",list} }
     function failure(error) { return { type: "GETLIST_FAILURE", error } }
 } 
+function updateSharedwith(listid,viewerId){
+    return dispatch => {
+        return listService.updateSharedwith(listid,viewerId).then((body)=>{
+            dispatch(viewerActions.setOwn(false));
+            dispatch(viewerActions.setsharedwithMe(true));
+            dispatch(success(body.item));
+        });
+    };
+    function success(list) { return { type: "GETLIST_SUCCESS",list} }
+}
 export default listActions
