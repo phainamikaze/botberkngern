@@ -14,7 +14,14 @@ module.exports.handler = async (event, context) => {
       createtime: Date.now().toString(),
       amount: Number(body.amount),
       details: body.details,
-      status:"NEW"
+      status:"NEW",
+      act:[
+        {
+          user:body.viewer,
+          msg:"สร้างไอเท็มใหม่",
+          acttime:Date.now().toString(),
+        }
+      ]
     },
   };
   try {

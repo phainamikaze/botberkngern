@@ -3,3 +3,4 @@ const config = {
     //API_ENDPOINT: "http://localhost:4000",
 }
 export default config
+// aws s3 sync build s3://bbg-dev-staticwebhosting-l39rki39ndip

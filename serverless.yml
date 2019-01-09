@@ -123,8 +123,8 @@ functions:
     handler: functions/updateitem/index.handler
     events:
       - http:
-          path: item
-          method: patch
+          path: item/update
+          method: post
           cors: true
   getitems:
     handler: functions/getitems/index.handler

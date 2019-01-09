@@ -7,18 +7,35 @@ const docClient = new AWS.DynamoDB.DocumentClient({region: AWS_REGION});
 module.exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
   console.log(body);
+  let vals = {
+    user:body.viewer,
+    msg:"",
+    acttime:Date.now().toString(),
+  };
+  if(body.newstatus==="PAID"){
+    vals.msg = "อัพเดทสถานะเป็น จ่ายแล้ว";
+  }else if(body.newstatus==="CONFIRM"){
+    vals.msg = "อัพเดทสถานะเป็น ยืนยันว่าได้รับแล้ว";
+  }else{
+    return {
+      statusCode: 400,
+      error: `newstatus is invalid`
+    };
+  }
   const params = {
     TableName: ITEM_TABLE,
     Key: {
       ownlist: body.listid,
       createtime: body.createtime
     },
-    UpdateExpression: "set #status = :status",
+    UpdateExpression: "set #status = :status ,#act = list_append(:vals,#act)",
     ExpressionAttributeNames:{
       "#status":"status",
+      "#act":"act"
     },
     ExpressionAttributeValues:{
         ":status":body.newstatus,
+        ":vals":[vals]
     },
     ReturnValues:"ALL_NEW"
   };

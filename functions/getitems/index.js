@@ -5,16 +5,37 @@ const ITEM_TABLE = process.env.ITEM_TABLE;
 const AWS_REGION = process.env.AWS_REGION;
 const docClient = new AWS.DynamoDB.DocumentClient({region: AWS_REGION});
 module.exports.handler = async (event, context) => {
-  //const body = JSON.parse(event.body);
+  console.log(event);
+  const filter = event.queryStringParameters.filter;
   const listid = event.pathParameters.id;
-  const params = {
+  let params = {
     TableName: ITEM_TABLE,
-    KeyConditionExpression: "ownlist = :ownlist",
     ExpressionAttributeValues: {
         ":ownlist": listid
     },
     ScanIndexForward:false
   };
+  if(filter==="ALL"){
+    params.KeyConditionExpression = "ownlist = :ownlist";
+  }else{
+    params.KeyConditionExpression = "ownlist = :ownlist and #status = :status";
+    params.ExpressionAttributeNames = {};
+    params.ExpressionAttributeNames["#status"] = "status";
+    params.IndexName = "ownlist-status-index";
+    if(filter==="NEW"){
+      params.ExpressionAttributeValues[":status"]= "NEW";
+    }else if(filter==="PAID"){
+      params.ExpressionAttributeValues[":status"]= "PAID";
+    }else if(filter==="CONFIRM"){
+      params.ExpressionAttributeValues[":status"]= "CONFIRM";
+    }else{
+      return {
+        statusCode: 400,
+        error: `filter is invalid`
+      };
+    }
+  }
+
   try {
     const data = await docClient.query(params).promise();
     return { 

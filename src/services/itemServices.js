@@ -22,7 +22,7 @@ function getItems(listid,filter){
     })
 }
 
-function additem(listid,amount,details){
+function additem(listid,amount,details,viewer){
     return fetch(config.API_ENDPOINT+"/item", {
         method: "post",
         headers: {
@@ -31,7 +31,8 @@ function additem(listid,amount,details){
         body: JSON.stringify({
             listid,
             amount,
-            details
+            details,
+            viewer
         })
     }).then(res => {
         if (res.status >= 400) {
@@ -61,15 +62,16 @@ function deleteitem(listid,createtime){
         return(body.item);
     })
 }
-function paiditem(listid,createtime){
-    return fetch(config.API_ENDPOINT+"/item", {
-        method: "patch",
+function paiditem(listid,createtime,viewer){
+    return fetch(config.API_ENDPOINT+"/item/update", {
+        method: "post",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             listid,
             createtime,
+            viewer,
             newstatus:"PAID"
         })
     }).then(res => {
@@ -81,16 +83,18 @@ function paiditem(listid,createtime){
         return(body.item);
     })
 }
-function confirmitem(listid,createtime){
-    return fetch(config.API_ENDPOINT+"/item", {
-        method: "patch",
+function confirmitem(listid,createtime,viewer){
+    return fetch(config.API_ENDPOINT+"/item/update", {
+        method: "post",
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             listid,
             createtime,
+            viewer,
             newstatus:"CONFIRM"
+            
         })
     }).then(res => {
         if (res.status >= 400) {

@@ -7,12 +7,14 @@ import {
     PreviewBody,
     PreviewItem,
 } from 'react-weui';
+import TimeAgo from 'javascript-time-ago';
+import en from 'javascript-time-ago/locale/en';
 import { 
     FaExclamationCircle,
     FaDollarSign,
     FaCheckCircle,
 } from "react-icons/fa";
-const Itemdetails  = ({data,viewer,onDelete,onConfirm})=>{
+const Itemdetails  = ({data,viewer,onDelete,onConfirm,onPaid})=>{
     let statusIcon,statusText;
     if(data.status==="NEW"){
         statusIcon = <FaExclamationCircle style={{color: '#0083FF' ,marginRight: '5px'}}/>;
@@ -30,6 +32,48 @@ const Itemdetails  = ({data,viewer,onDelete,onConfirm})=>{
         </div>
     )
 
+    let bottonArea,delBotton,confirmBotton,paidBotton;
+    if(viewer.owner===false && viewer.sharedWithMe===false){
+        bottonArea = (
+            <ButtonArea direction="horizontal"></ButtonArea>
+        );
+    }else if(viewer.owner===true && viewer.sharedWithMe===false){
+        if(data.status==="NEW"){
+            delBotton = <Button type="warn" onClick={()=>{onDelete(data.ownlist,data.createtime)}}>ลบ</Button>
+        }else{
+            delBotton = <Button type="warn" disabled>ลบ</Button>
+        }
+        if(data.status==="PAID"){
+            confirmBotton = <Button type="primary" onClick={()=>{onConfirm(data.ownlist,data.createtime,viewer.id)}}>ยืนยันว่าได้รับแล้ว</Button>
+        }else{
+            confirmBotton = <Button type="primary" disabled>ยืนยันว่าได้รับแล้ว</Button>
+        }
+        bottonArea = (
+            <ButtonArea direction="horizontal">
+            {delBotton}
+            {confirmBotton}
+            </ButtonArea>
+        );
+    }else if(viewer.owner===false && viewer.sharedWithMe===true){
+        if(data.status==="NEW"){
+            paidBotton = <Button type="primary" onClick={()=>{onPaid(data.ownlist,data.createtime,viewer.id)}}>จ่ายแล้ว</Button>
+        }else{
+            paidBotton = <Button type="primary" disabled>จ่ายแล้ว</Button>
+        }
+        bottonArea = (
+            <ButtonArea direction="horizontal">
+            {paidBotton}
+            </ButtonArea>
+        );
+    }
+    TimeAgo.addLocale(en);
+    const timeAgo = new TimeAgo('en-US');
+    const listact = data.act.map((actitem)=>{
+        let flabal = actitem.user+" "+actitem.msg;
+        return (
+            <PreviewItem label={flabal} value={timeAgo.format(new Date(Number(actitem.acttime)))} />
+        );
+    })
     return (
         <div id="itemdetails">
         <Preview>
@@ -38,15 +82,10 @@ const Itemdetails  = ({data,viewer,onDelete,onConfirm})=>{
             </PreviewHeader>
             <PreviewBody>
                 <PreviewItem label={headlabal} value={ "เพิ่มเมื่อ "+(new Date(Number(data.createtime))).toLocaleString() } />
-                <PreviewItem label="Description" value="Product Description" />
-                <PreviewItem label="Description" value="Product Description" />
-                <PreviewItem label="Description" value="Product Description" />
-                <PreviewItem label="Details" value="Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. " />
+
+                {listact}
             </PreviewBody>
-            <ButtonArea direction="horizontal">
-                <Button type="warn" disabled={!viewer.owner}  onClick={()=>{onDelete(data.ownlist,data.createtime)}}>ลบ</Button>
-                <Button type="primary" disabled={!viewer.sharedWithMe}  onClick={()=>{onConfirm(data.ownlist,data.createtime)}}>ยืนยันว่าได้รับแล้ว</Button>
-            </ButtonArea>
+            {bottonArea}
         </Preview>
         </div>
     )

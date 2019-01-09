@@ -35,6 +35,7 @@ const Additem  = (props)=>{
                     <Input type="text" placeholder=""/>
                 </CellBody>
             </FormCell>
+            <input type="hidden" value={props.viewer.id} />
         </Form>
         
         <CellsTips>เพิ่มใหม่</CellsTips>

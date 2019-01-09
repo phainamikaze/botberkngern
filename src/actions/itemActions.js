@@ -26,11 +26,11 @@ function getItems(listid,filter){
     function success(items,filter) { return { type: "GETITEMS_SUCESS", items,filter } }
     function failure(error) { return { type: "GETITEMS_FAILURE", error } }
 }
-function additem(listid,amount,details){
+function additem(listid,amount,details,viewer){
     return dispatch => {
         dispatch(menuActions.show("SHOW_MENU"));
         dispatch(request());
-        return itemServices.additem(listid,amount,details)
+        return itemServices.additem(listid,amount,details,viewer)
             .then(
                 item => { 
                     dispatch(success(item));
@@ -64,11 +64,11 @@ function deleteitem(listid,createtime){
     function success(item) { return { type: "DELITEM_SUCCESS", item } }
     function failure(error) { return { type: "DELITEM_FAILURE", error } }
 }
-function paiditem(listid,createtime){
+function paiditem(listid,createtime,viewer){
     return dispatch => {
         dispatch(menuActions.show("SHOW_MENU"));
         dispatch(request());
-        return itemServices.paiditem(listid,createtime)
+        return itemServices.paiditem(listid,createtime,viewer)
             .then(
                 item => { 
                     dispatch(success(item));
@@ -83,11 +83,11 @@ function paiditem(listid,createtime){
     function success(item) { return { type: "PAIDITEM_SUCCESS", item } }
     function failure(error) { return { type: "PAIDITEM_FAILURE", error } }
 }
-function confirmitem(listid,createtime){
+function confirmitem(listid,createtime,viewer){
     return dispatch => {
         dispatch(menuActions.show("SHOW_MENU"));
         dispatch(request());
-        return itemServices.confirmitem(listid,createtime)
+        return itemServices.confirmitem(listid,createtime,viewer)
             .then(
                 item => { 
                     dispatch(success(item));

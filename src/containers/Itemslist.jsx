@@ -34,12 +34,17 @@ class Itemslist extends React.Component {
 
     if(this.props.menu.status === 'FAB'){
       footpage = (
-        <FabMenu show={this.props.show} listid={this.props.match.params.listid}/>
+        <FabMenu show={this.props.show} 
+        viewer={this.props.viewer}
+        filterItems={this.props.filterItems}
+        listid={this.props.match.params.listid}/>
       );
     }else if(this.props.menu.status === 'ADDNEW'){
       footpage = (
         <Bmodal show={this.props.show}>
-          <Additem onSubmit={this.props.additem}/>
+          <Additem onSubmit={this.props.additem}
+            viewer={this.props.viewer}
+          />
         </Bmodal>
       );
     }else if(this.props.menu.status === 'ITEMDETAIL'){
@@ -89,6 +94,7 @@ const mapStateToProps = (state, ownProps) => ({
   viewer: state.viewer
 })
 const mapDispatchToProps = (dispatch,ownProps) => {
+  console.log(ownProps);
   return {
       getListitems: (listid,filter) => {
         dispatch(itemActions.getItems(listid,filter));
@@ -102,7 +108,8 @@ const mapDispatchToProps = (dispatch,ownProps) => {
         dispatch(itemActions.additem(
           ownProps.match.params.listid,
           event.target[0].value,
-          event.target[1].value
+          event.target[1].value,
+          event.target[2].value
         ));
       },
       itemdetail: (data)=>{
@@ -117,16 +124,24 @@ const mapDispatchToProps = (dispatch,ownProps) => {
           createtime
         ));
       },
-      confirmitem: (listid,createtime)=>{
+      confirmitem: (listid,createtime,viewer)=>{
         dispatch(itemActions.confirmitem(
           listid,
-          createtime
+          createtime,
+          viewer
         ));
       },
-      paiditem: (listid,createtime)=>{
+      paiditem: (listid,createtime,viewer)=>{
         dispatch(itemActions.paiditem(
           listid,
-          createtime
+          createtime,
+          viewer
+        ));
+      },
+      filterItems: (listid,filter)=>{
+        dispatch(itemActions.getItems(
+          listid,
+          filter
         ));
       },
       dispatch
