@@ -62,10 +62,14 @@ layers:
   MessengerHepers:
     path: layers/messengerhepers
 functions:
-  oncreatelist:
-    handler: functions/oncreatelist/index.handler
+  onlistchange:
+    handler: functions/onlistchange/index.handler
     events:
-      - stream: arn:aws:dynamodb:ap-southeast-1:435044949037:table/BBG-LIST/stream/2019-01-07T04:55:56.296
+      - stream: arn:aws:dynamodb:ap-southeast-1:435044949037:table/BBG-LIST/stream/2019-01-10T04:48:42.674
+  onitemchange:
+    handler: functions/onitemchange/index.handler
+    events:
+      - stream: arn:aws:dynamodb:ap-southeast-1:435044949037:table/BBG-ITEM/stream/2019-01-10T04:47:25.175
   verifytoken:
     handler: functions/verifytoken/index.handler
     events:

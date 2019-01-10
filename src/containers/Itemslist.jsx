@@ -64,7 +64,7 @@ class Itemslist extends React.Component {
       footpage = (
         <Bmodal show={this.props.show}>
           <Listdetail data={this.props.list} 
-
+            viewer={this.props.viewer}
           />
         </Bmodal>
       );

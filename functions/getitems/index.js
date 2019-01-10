@@ -5,7 +5,6 @@ const ITEM_TABLE = process.env.ITEM_TABLE;
 const AWS_REGION = process.env.AWS_REGION;
 const docClient = new AWS.DynamoDB.DocumentClient({region: AWS_REGION});
 module.exports.handler = async (event, context) => {
-  console.log(event);
   const filter = event.queryStringParameters.filter;
   const listid = event.pathParameters.id;
   let params = {

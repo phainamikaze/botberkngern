@@ -10,7 +10,10 @@ const listReducer = (state = {
                 owner: action.list.owner,
                 title: action.list.title,
                 createtime: action.list.createtime,
-                sharedwith: action.list.sharedwith
+                sharedwith: action.list.sharedwith,
+                newval: action.list.newval,
+                paid: action.list.paid,
+                confirm: action.list.confirm,
             }
         default:
             return state;

@@ -12,6 +12,14 @@ import {
 } from "react-icons/fa";
 
 const FabMenu = (props) => {
+    let btname;
+    if(props.viewer.owner===true && props.viewer.sharedWithMe===false){
+        btname = "เรียกเก็บเงิน";
+    }else if (props.viewer.owner===false && props.viewer.sharedWithMe===true){
+        btname = "ค้างชำระ";
+    }else{
+        btname = "มาใหม่";
+    }
     const addbutton = (
         <Action style={{backgroundColor: '#ffffff',color: '#34495e'}}
                 text="เพิ่ม"
@@ -21,7 +29,7 @@ const FabMenu = (props) => {
     );
     const detailsbutton = (
         <Action style={{backgroundColor: '#ffffff',color: '#34495e'}}
-            text="รายละเอียด"
+            text="จัดการ"
             onClick={()=>{props.show("LISTDETAIL",props.listid)}}>
             <FaInfo />
         </Action>
@@ -35,21 +43,21 @@ const FabMenu = (props) => {
     );
     const cbutton = (
         <Action style={{backgroundColor: '#ffffff',color: '#1AAD19'}}
-                text="ยืนยันว่าได้รับแล้ว"
+                text="ยืนยัน"
                 onClick={()=>{props.filterItems(props.listid,"CONFIRM")}}>
                 <FaCheckCircle />
             </Action>
     );
     const pbutton = (
         <Action style={{backgroundColor: '#ffffff',color: '#FFA500'}}
-                text="จ่ายแล้ว"
+                text="ชำระแล้ว"
                 onClick={()=>{props.filterItems(props.listid,"PAID")}}>
                 <FaDollarSign />
             </Action>
     );
     const nbutton = (
         <Action style={{backgroundColor: '#ffffff',color: '#0083FF'}}
-                text="มาใหม่"
+                text={btname}
                 onClick={()=>{props.filterItems(props.listid,"NEW")}}>
                 <FaExclamationCircle />
             </Action>

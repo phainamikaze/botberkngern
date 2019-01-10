@@ -12,7 +12,10 @@ module.exports.handler = async (event, context) => {
     Item: {
       owner: body.owner,
       createtime: Date.now().toString(),
-      title: body.title? body.title:'no name'
+      title: body.title? body.title:'no name',
+      newval:0,
+      paid:0,
+      confirm:0
     },
   };
   console.log(params);
