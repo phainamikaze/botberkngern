@@ -7,13 +7,15 @@ import items from "./reducers/itemsReducer";
 import menu from "./reducers/menuReducer";
 import loader from "./reducers/loaderReducer";
 import viewer from "./reducers/viewerReducer";
+import listact from "./reducers/listactReducer";
 export default createStore(
     combineReducers({
         list,
         items,
         menu,
         loader,
-        viewer
+        viewer,
+        listact
     }),
     applyMiddleware(logger,thunk)
 );

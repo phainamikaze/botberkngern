@@ -1,11 +1,13 @@
 import { itemServices } from '../services/itemServices';
 import menuActions from './menuActions';
+import fbServices from '../services/facebookProfileServices';
 const itemActions = {
     getItems,
     additem,
     deleteitem,
     paiditem,
-    confirmitem
+    confirmitem,
+    convertId
 }
 
 function getItems(listid,filter){
@@ -102,4 +104,24 @@ function confirmitem(listid,createtime,viewer){
     function success(item) { return { type: "CONFIRMITEM_SUCCESS", item } }
     function failure(error) { return { type: "CONFIRMITEM_FAILURE", error } }
 }
+function convertId(item){
+    return dispatch => {
+        let newitem = item.act.map((actitem)=>{
+            return fbServices.getProfile(actitem.user,"first_name").then((profile)=>{
+                return {
+                    ...actitem,
+                    user:profile['first_name']
+                };
+            })
+            
+        })
+        
+        Promise.all(newitem).then((mynewitem)=>{
+            dispatch(success(mynewitem));
+        })
+        
+    };
+    function success(item) { return { type: "CONVERT_SUCCESS", item } }
+}
+
 export default itemActions

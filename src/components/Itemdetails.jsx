@@ -14,7 +14,7 @@ import {
     FaDollarSign,
     FaCheckCircle,
 } from "react-icons/fa";
-const Itemdetails  = ({data,viewer,onDelete,onConfirm,onPaid})=>{
+const Itemdetails  = ({data,viewer,onDelete,onConfirm,onPaid,listact})=>{
     let statusIcon,statusText;
     if(data.status==="NEW"){
         statusIcon = <FaExclamationCircle style={{color: '#0083FF' ,marginRight: '5px'}}/>;
@@ -68,8 +68,8 @@ const Itemdetails  = ({data,viewer,onDelete,onConfirm,onPaid})=>{
     }
     TimeAgo.addLocale(en);
     const timeAgo = new TimeAgo('en-US');
-    const listact = data.act.map((actitem)=>{
-        let flabal = actitem.user+" "+actitem.msg;
+    const listactshow = listact.map((actitem)=>{
+        const flabal = actitem.user+" "+actitem.msg;
         return (
             <PreviewItem label={flabal} value={timeAgo.format(new Date(Number(actitem.acttime)))} />
         );
@@ -83,7 +83,7 @@ const Itemdetails  = ({data,viewer,onDelete,onConfirm,onPaid})=>{
             <PreviewBody>
                 <PreviewItem label={headlabal} value={ "เพิ่มเมื่อ "+(new Date(Number(data.createtime))).toLocaleString() } />
 
-                {listact}
+                {listactshow}
             </PreviewBody>
             {bottonArea}
         </Preview>

@@ -55,6 +55,8 @@ class Itemslist extends React.Component {
             onDelete={this.props.deleteitem}
             onConfirm={this.props.confirmitem}
             onPaid={this.props.paiditem}
+            convertId={this.props.convertId}
+            listact={this.props.listact}
           />
         </Bmodal>
       );
@@ -91,7 +93,8 @@ const mapStateToProps = (state, ownProps) => ({
   filter:state.items.filter,
   menu: state.menu,
   list:state.list,
-  viewer: state.viewer
+  viewer: state.viewer,
+  listact:state.listact
 })
 const mapDispatchToProps = (dispatch,ownProps) => {
   console.log(ownProps);
@@ -117,6 +120,7 @@ const mapDispatchToProps = (dispatch,ownProps) => {
           "ITEMDETAIL",
           data
         ));
+        dispatch(itemActions.convertId(data));
       },
       deleteitem: (listid,createtime)=>{
         dispatch(itemActions.deleteitem(

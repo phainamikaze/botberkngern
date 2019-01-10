@@ -61,7 +61,7 @@ const itemsReducer = (state = {
                     return true; // stop searching
                 }
             });
-            return cresult;
+            return cresult; 
         default:
             return state;
     }

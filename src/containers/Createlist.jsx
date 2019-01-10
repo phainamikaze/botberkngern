@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 
 class Createlist extends React.Component {
     componentDidMount(){
-        console.log(this.props)
+        document.title = 'สร้างรายการใหม่';
     }
 
     savenewlist=(event) => {

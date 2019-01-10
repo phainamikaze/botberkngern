@@ -37,6 +37,7 @@ function getlist(listid,viewerId=null){
             ).then(
                 body => { 
                     dispatch(success(body.list));
+                    document.title = body.list.title;
                     if(!(viewerId===null)){
                         if(body.list.owner===viewerId){
                             dispatch(viewerActions.setOwn(true));
