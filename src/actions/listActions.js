@@ -42,9 +42,13 @@ function getlist(listid,viewerId=null){
                         if(body.list.owner===viewerId){
                             dispatch(viewerActions.setOwn(true));
                             dispatch(viewerActions.setsharedwithMe(false));
+                            if(body.list.sharedwith){
+                                dispatch(viewerActions.convertId(body.list.sharedwith));
+                            }
                         }else if(!body.list.sharedwith){
                             dispatch(updateSharedwith(listid,viewerId));
                         }else if(body.list.sharedwith===viewerId){
+                            dispatch(viewerActions.convertId(body.list.owner));
                             dispatch(viewerActions.setOwn(false));
                             dispatch(viewerActions.setsharedwithMe(true));
                         }else{
@@ -52,8 +56,8 @@ function getlist(listid,viewerId=null){
                             dispatch(viewerActions.setsharedwithMe(false));
                         }
                     }
-                        
-                    dispatch(itemActions.getItems(listid,"NEW"));
+                    
+                    
                 },
                 error => {
                     dispatch(failure(error.toString()));

@@ -16,6 +16,11 @@ const viewerReucer = (state = {
                 ...state,
                 sharedWithMe:action.payload
             };
+        case "VIEWER_CONVERT_SUCCESS":
+            return {
+                ...state,
+                profile:action.profile
+            };
         default:
             return state
     }

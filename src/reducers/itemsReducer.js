@@ -9,7 +9,7 @@ const itemsReducer = (state = {
                 filter:action.filter
             }
         case "ADDITEM_SUCCESS":
-            if (state.filter === "ALL" || state.filter === action.item.status){
+            // if (state.filter === "ALL" || state.filter === action.item.status){
                 return {
                     items:[
                         action.item,
@@ -17,9 +17,9 @@ const itemsReducer = (state = {
                     ],
                     filter:state.filter
                 }
-            }else{
-                return state;
-            }
+            // }else{
+            //     return state;
+            // }
         case "DELITEM_SUCCESS":
             let dresult = {
                 items:[

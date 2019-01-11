@@ -1,48 +1,47 @@
-import React, {createElement} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import {Footer, FooterText} from 'react-weui';
+import React from 'react';
+import {
+  Footer,
+  FooterText
+} from 'react-weui';
+import '../style/viewer.css'
 
-const Viewer = ({viewerId, users}) => {
-  if (users.length <= 1) { return null; }
+const Viewer = ({viewer,list}) => {
+  let show,txt;
+  let name,pic;
+  if(viewer.owner===true && viewer.sharedWithMe===false){
+    txt = "เรียกเก็บเงินจาก";
+  }else if(viewer.owner===false && viewer.sharedWithMe===true){
+    txt = "ค้างชำระให้กับ";
+  }else{
+    txt = "...";
+  }
+  if (viewer.profile){
+    pic = <img src={viewer.profile.profile_pic} className="viewer"/>
+    name = viewer.profile.first_name+" "+viewer.profile.last_name;
+    show = (<div>
+      {pic}
+      <Footer>
+        {list.title}
+        <FooterText>
+         {txt} {name}
+        </FooterText>
+      </Footer>
+      </div>);
+  }else{
+    show = (<div>
+      <Footer>
+        {list.title}
+        <FooterText>
+          ยังไม่ได้เรียกเก็บเงินจากใครเลย....
+        </FooterText>
+      </Footer>
+      </div>);
+  }
 
-  const {activeCount, viewers} = users.reduce(
-    ({activeCount, viewers}, user) => {
-      if (user.fbId === viewerId) {
-        return {activeCount, viewers};
-      }
-
-    // Attributes
-      const {fbId, online, profilePic} = user;
-      const className = `viewer ${online ? 'active' : ''}`;
-
-    // Construct viewer
-      const viewer = <img key={fbId} src={profilePic} className={className} />;
-
-    // Accumulate
-      return {
-        activeCount: (user.online ? activeCount + 1 : activeCount),
-        viewers: viewers.concat(viewer),
-      };
-    },
-    {activeCount: 0, viewers: []}
-  );
 
   return (
     <section id='viewers'>
-      <ReactCSSTransitionGroup
-        className='viewers-list-cntnr'
-        transitionName='viewer'
-        transitionEnterTimeout={300}
-        transitionLeaveTimeout={300}
-      >
-        {viewers}
-      </ReactCSSTransitionGroup>
-
-      <Footer id='viewer-count'>
-        <FooterText>
-          {activeCount}/{viewers.length} people are viewing this list right now
-        </FooterText>
-      </Footer>
+      {show}
     </section>
   );
 };

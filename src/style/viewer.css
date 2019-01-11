@@ -1,0 +1,15 @@
+.viewer {
+    width: 3.25rem;
+    height: 3.25rem;
+    background-color: #CCC;
+    border-radius: 50%;
+    opacity: 1;
+    transition: all 500ms ease-in-out;
+    object-fit: cover;
+    vertical-align: baseline;
+  }
+  #viewers {
+    width: 100%;
+    padding: .75rem 0 0;
+    text-align: center;
+  }

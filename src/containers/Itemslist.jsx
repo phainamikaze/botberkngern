@@ -13,6 +13,8 @@ import Listdetail from '../components/Listdetail';
 import Bmodal from '../components/Bmodal';
 import Itemdetails from '../components/Itemdetails';
 import store from '../store';
+import Viewer from '../components/Viewer';
+
 class Itemslist extends React.Component {
   componentWillMount() {
     const { viewer } = store.getState();
@@ -21,7 +23,9 @@ class Itemslist extends React.Component {
       this.props.match.params.listid,
       viewer.id
       ));
-    //dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
+    
+    dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
+
 
   }
   componentDidMount() {
@@ -73,6 +77,10 @@ class Itemslist extends React.Component {
     <div id="itemslist">
       <section>
       <Panel>
+        <Viewer 
+        viewer={this.props.viewer}
+        list={this.props.list} 
+        />
         <section>
           <Items 
             items={this.props.items} 
@@ -104,6 +112,9 @@ const mapDispatchToProps = (dispatch,ownProps) => {
       },
       show: (params) => {
         dispatch(menuActions.show(params));
+        dispatch(listActions.getlist(
+          ownProps.match.params.listid
+        ));
       },
       additem: (event)=>{
         event.preventDefault();

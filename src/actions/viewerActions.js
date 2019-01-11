@@ -1,8 +1,9 @@
-
+import fbServices from '../services/facebookProfileServices';
 const viewerActions = {
     setViewer,
     setOwn,
-    setsharedwithMe
+    setsharedwithMe,
+    convertId
 }
 
 function setViewer(id){
@@ -22,6 +23,15 @@ function setsharedwithMe(payload){
         type: "SET_SHAREDWITHME",
         payload
     }; 
+}
+function convertId(fbId){
+    return dispatch => {
+        fbServices.getProfile(fbId,"first_name,last_name,profile_pic")
+        .then((profile)=>{
+            dispatch(success(profile));
+        });
+    };
+    function success(profile) { return { type: "VIEWER_CONVERT_SUCCESS", profile } }
 }
 
 export default viewerActions
