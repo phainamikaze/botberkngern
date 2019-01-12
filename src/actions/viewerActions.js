@@ -26,7 +26,7 @@ function setsharedwithMe(payload){
 }
 function convertId(fbId){
     return dispatch => {
-        fbServices.getProfile(fbId,"first_name,last_name,profile_pic")
+        fbServices.getProfile(fbId,"first_name,last_name,picture")
         .then((profile)=>{
             dispatch(success(profile));
         });

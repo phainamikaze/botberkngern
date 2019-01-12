@@ -84,8 +84,9 @@ class Itemslist extends React.Component {
         <section>
           <Items 
             items={this.props.items} 
-            list={this.props.list} 
+            filter={this.props.filter} 
             itemdetail={this.props.itemdetail}
+            viewer={this.props.viewer}
           /> 
         </section>
       </Panel>

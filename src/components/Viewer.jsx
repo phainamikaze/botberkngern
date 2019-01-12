@@ -16,7 +16,7 @@ const Viewer = ({viewer,list}) => {
     txt = "...";
   }
   if (viewer.profile){
-    pic = <img src={viewer.profile.profile_pic} className="viewer"/>
+    pic = <img src={viewer.profile.picture.data.url} className="viewer"/>
     name = viewer.profile.first_name+" "+viewer.profile.last_name;
     show = (<div>
       {pic}

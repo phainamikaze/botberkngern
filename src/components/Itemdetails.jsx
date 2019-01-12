@@ -18,13 +18,17 @@ const Itemdetails  = ({data,viewer,onDelete,onConfirm,onPaid,listact})=>{
     let statusIcon,statusText;
     if(data.status==="NEW"){
         statusIcon = <FaExclamationCircle style={{color: '#0083FF' ,marginRight: '5px'}}/>;
-        statusText = "มาใหม่";
+        if(viewer.owner===true && viewer.sharedWithMe===false){
+            statusText = "เรียกเก็บเงิน";
+        }else if(viewer.owner===false && viewer.sharedWithMe===true){
+            statusText = "ค้างชำระ";
+        }   
     }else if(data.status==="PAID"){
         statusIcon = <FaDollarSign style={{color: '#FFA500' ,marginRight: '5px'}}/>;
-        statusText = "จ่ายแล้ว";
+        statusText = "ชำระแล้ว";
     }else if(data.status==="CONFIRM"){
         statusIcon = <FaCheckCircle style={{color: '#1AAD19' ,marginRight: '5px'}}/>;
-        statusText = "ยืนยันว่าได้รับแล้ว";
+        statusText = "ยืนยัน";
     }
     const headlabal = (
         <div>
@@ -44,9 +48,9 @@ const Itemdetails  = ({data,viewer,onDelete,onConfirm,onPaid,listact})=>{
             delBotton = <Button type="warn" disabled>ลบ</Button>
         }
         if(data.status==="PAID"){
-            confirmBotton = <Button type="primary" onClick={()=>{onConfirm(data.ownlist,data.createtime,viewer.id)}}>ยืนยันว่าได้รับแล้ว</Button>
+            confirmBotton = <Button type="primary" onClick={()=>{onConfirm(data.ownlist,data.createtime,viewer.id)}}>ยืนยัน</Button>
         }else{
-            confirmBotton = <Button type="primary" disabled>ยืนยันว่าได้รับแล้ว</Button>
+            confirmBotton = <Button type="primary" disabled>ยืนยัน</Button>
         }
         bottonArea = (
             <ButtonArea direction="horizontal">
@@ -56,9 +60,9 @@ const Itemdetails  = ({data,viewer,onDelete,onConfirm,onPaid,listact})=>{
         );
     }else if(viewer.owner===false && viewer.sharedWithMe===true){
         if(data.status==="NEW"){
-            paidBotton = <Button type="primary" onClick={()=>{onPaid(data.ownlist,data.createtime,viewer.id)}}>จ่ายแล้ว</Button>
+            paidBotton = <Button type="primary" onClick={()=>{onPaid(data.ownlist,data.createtime,viewer.id)}}>ชำระแล้ว</Button>
         }else{
-            paidBotton = <Button type="primary" disabled>จ่ายแล้ว</Button>
+            paidBotton = <Button type="primary" disabled>ชำระแล้ว</Button>
         }
         bottonArea = (
             <ButtonArea direction="horizontal">
