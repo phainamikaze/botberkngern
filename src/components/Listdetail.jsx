@@ -12,6 +12,7 @@ import {
     FaDollarSign,
     FaCheckCircle,
 } from "react-icons/fa";
+import Invite from './Invite';
 const Listdetail  = ({data,viewer})=>{
 
     let statusText,captionText,headText,headAmount;
@@ -58,7 +59,9 @@ const Listdetail  = ({data,viewer})=>{
         delBotton = <Button type="warn" onClick={()=>{}}>ลบรายการนี้</Button>
 
         if(!data.sharedwith){
-            confirmBotton = <Button type="primary">แชร์ให้เพื่อน</Button>
+            confirmBotton = (<Invite 
+                list={data}
+            />);
         }else if(data.paid!==0){
             confirmBotton = <Button type="primary" onClick={()=>{}} >ยืนยัน</Button>
         }else{
