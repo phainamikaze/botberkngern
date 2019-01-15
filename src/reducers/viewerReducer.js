@@ -1,5 +1,6 @@
 const viewerReucer = (state = {
     id:"",
+    profileIsload:false
 }, action) => {
     switch (action.type) {
         case "SET_VIEWER":
@@ -19,7 +20,8 @@ const viewerReucer = (state = {
         case "VIEWER_CONVERT_SUCCESS":
             return {
                 ...state,
-                profile:action.profile
+                profile:action.profile,
+                profileIsload:true
             };
         default:
             return state

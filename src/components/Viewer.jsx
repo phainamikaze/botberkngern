@@ -15,24 +15,35 @@ const Viewer = ({viewer,list}) => {
   }else{
     txt = "...";
   }
-  if (viewer.profile){
-    pic = <img src={viewer.profile.picture.data.url} className="viewer"/>
-    name = viewer.profile.first_name+" "+viewer.profile.last_name;
-    show = (<div>
-      {pic}
-      <Footer>
-        {list.title}
-        <FooterText>
-         {txt} {name}
-        </FooterText>
-      </Footer>
-      </div>);
+  if (viewer.profileIsload === true){
+    if(viewer.profile){
+      pic = <img src={viewer.profile.picture.data.url} className="viewer"/>
+      name = viewer.profile.first_name+" "+viewer.profile.last_name;
+      show = (<div>
+        {pic}
+        <Footer>
+          {list.title}
+          <FooterText>
+          {txt} {name}
+          </FooterText>
+        </Footer>
+        </div>);
+    }else{
+      show = (<div>
+        <Footer>
+          {list.title}
+          <FooterText>
+            ยังไม่ได้เรียกเก็บเงินจากใครเลย....
+          </FooterText>
+        </Footer>
+        </div>);
+    }
   }else{
     show = (<div>
       <Footer>
         {list.title}
         <FooterText>
-          ยังไม่ได้เรียกเก็บเงินจากใครเลย....
+          กำลังโหลด....
         </FooterText>
       </Footer>
       </div>);

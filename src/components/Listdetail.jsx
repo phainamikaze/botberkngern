@@ -18,12 +18,12 @@ const Listdetail  = ({data,viewer})=>{
     let statusText,captionText,headText,headAmount;
     if(viewer.owner===true && viewer.sharedWithMe===false){
         statusText = "เรียกเก็บเงิน";
-        captionText = "กดปุ่ม 'ยืนยัน' เพื่อยืนยันยอดที่ 'ชำระแล้ว' ทั้งหมด";
+        captionText = "กดปุ่ม 'ยืนยันทั้งหมด' เพื่อยืนยันยอดที่ 'ชำระแล้ว' ทั้งหมด";
         headText = "ชำระแล้ว "+"x"+" รายการ รวมทั้งหมด";
         headAmount = "฿"+data.paid;
     }else if(viewer.owner===false && viewer.sharedWithMe===true){
         statusText = "ค้างชำระ";
-        captionText = "กดปุ่ม 'ชำระแล้ว' เพื่อชำระยอดที่ 'ค้างชำระ' ทั้งหมด";
+        captionText = "กดปุ่ม 'ชำระแล้วทั้งหมด' เพื่อชำระยอดที่ 'ค้างชำระ' ทั้งหมด";
         headText = "ค้างชำระ "+"x"+" รายการ รวมทั้งหมด";
         headAmount = "฿"+data.newval;
     }else{
@@ -63,9 +63,9 @@ const Listdetail  = ({data,viewer})=>{
                 list={data}
             />);
         }else if(data.paid!==0){
-            confirmBotton = <Button type="primary" onClick={()=>{}} >ยืนยัน</Button>
+            confirmBotton = <Button type="primary" onClick={()=>{}} >ยืนยันทั้งหมด</Button>
         }else{
-            confirmBotton = <Button type="primary" disabled>ยืนยัน</Button>
+            confirmBotton = <Button type="primary" disabled>ยืนยันทั้งหมด</Button>
         }
         bottonArea = (
             <ButtonArea direction="horizontal">
@@ -75,9 +75,9 @@ const Listdetail  = ({data,viewer})=>{
         );
     }else if(viewer.owner===false && viewer.sharedWithMe===true){
         if(data.newval!==0){
-            paidBotton = <Button type="primary" onClick={()=>{}}>ชำระแล้ว</Button>
+            paidBotton = <Button type="primary" onClick={()=>{}}>ชำระแล้วทั้งหมด</Button>
         }else{
-            paidBotton = <Button type="primary" disabled>ชำระแล้ว</Button>
+            paidBotton = <Button type="primary" disabled>ชำระแล้วทั้งหมด</Button>
         }
         bottonArea = (
             <ButtonArea direction="horizontal">
