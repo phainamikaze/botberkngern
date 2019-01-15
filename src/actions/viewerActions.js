@@ -24,14 +24,20 @@ function setsharedwithMe(payload){
         payload
     }; 
 }
-function convertId(fbId){
+function convertId(fbId=null){
     return dispatch => {
-        fbServices.getProfile(fbId,"first_name,last_name,picture")
-        .then((profile)=>{
-            dispatch(success(profile));
-        });
+        if(fbId===null){
+            dispatch(error());
+        }else{
+            fbServices.getProfile(fbId,"first_name,last_name,picture")
+            .then((profile)=>{
+                dispatch(success(profile));
+            });
+        }
+
     };
     function success(profile) { return { type: "VIEWER_CONVERT_SUCCESS", profile } }
+    function error() { return { type: "VIEWER_CONVERT_ERROR" } }
 }
 
 export default viewerActions

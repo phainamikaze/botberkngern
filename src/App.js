@@ -6,6 +6,7 @@ import Oops from './components/Oops';
 import viewerActions from './actions/viewerActions';
 import Createlist from './containers/Createlist';
 import Itemslist from './containers/Itemslist';
+import Notfound from './components/Notfound';
 import { BrowserRouter } from 'react-router-dom';
 import './style.css';
 
@@ -20,6 +21,7 @@ class App extends React.Component{
           <Route path="/" exact component={Oops} />
           <Route path="/createlist" render={() => <Createlist {...this.props} />} />
           <Route path="/itemslist/:listid"  component={Itemslist} />
+          <Route path="/notfound"  component={Notfound} />
         </div>
       </BrowserRouter>
     );

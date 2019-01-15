@@ -15,6 +15,8 @@ const listReducer = (state = {
                 paid: action.list.paid,
                 confirm: action.list.confirm,
             }
+        case "GETLIST_FAILURE":
+            return false;
         default:
             return state;
     }

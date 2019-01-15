@@ -64,10 +64,12 @@ layers:
   Request:
     path: layers/request
 functions:
-  onlistchange:
-    handler: functions/onlistchange/index.handler
+  onlistchangeNoti:
+    handler: functions/onlistchangenoti/index.handler
     events:
       - stream: arn:aws:dynamodb:ap-southeast-1:435044949037:table/BBG-LIST/stream/2019-01-10T04:48:42.674
+    layers:
+      - {Ref: MessengerHepersLambdaLayer}
   onitemchange:
     handler: functions/onitemchange/index.handler
     events:

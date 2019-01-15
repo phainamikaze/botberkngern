@@ -23,6 +23,11 @@ const viewerReucer = (state = {
                 profile:action.profile,
                 profileIsload:true
             };
+        case "VIEWER_CONVERT_ERROR":
+        return {
+            ...state,
+            profileIsload:true
+        };
         default:
             return state
     }

@@ -18,13 +18,23 @@ module.exports.handler = async (event, context) => {
   console.log(params);
   try {
     const data = await docClient.get(params).promise();
-    return { 
-      statusCode: 200, 
-      headers: {
-        "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
-        "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
-      },
-      body: JSON.stringify({ list:data.Item }) };
+    if(Object.keys(data).length === 0){
+      return { 
+        statusCode: 400, 
+        headers: {
+          "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+          "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
+        },
+        body: JSON.stringify({ list:{} }) };
+    }else{
+      return { 
+        statusCode: 200, 
+        headers: {
+          "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+          "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
+        },
+        body: JSON.stringify({ list:data.Item }) };
+    }
   } catch(error) {
     return {
       statusCode: 400,

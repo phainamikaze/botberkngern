@@ -44,6 +44,8 @@ function getlist(listid,viewerId=null){
                             dispatch(viewerActions.setsharedwithMe(false));
                             if(body.list.sharedwith){
                                 dispatch(viewerActions.convertId(body.list.sharedwith));
+                            }else{
+                                dispatch(viewerActions.convertId());
                             }
                         }else if(!body.list.sharedwith){
                             dispatch(updateSharedwith(listid,viewerId));
@@ -75,6 +77,7 @@ function updateSharedwith(listid,viewerId){
             dispatch(viewerActions.setOwn(false));
             dispatch(viewerActions.setsharedwithMe(true));
             dispatch(success(body.item));
+            dispatch(viewerActions.convertId(body.item.owner));
         });
     };
     function success(list) { return { type: "GETLIST_SUCCESS",list} }

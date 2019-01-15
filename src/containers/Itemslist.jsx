@@ -14,6 +14,7 @@ import Bmodal from '../components/Bmodal';
 import Itemdetails from '../components/Itemdetails';
 import store from '../store';
 import Viewer from '../components/Viewer';
+import { withRouter } from 'react-router-dom';
 
 class Itemslist extends React.Component {
   componentWillMount() {
@@ -23,15 +24,18 @@ class Itemslist extends React.Component {
       this.props.match.params.listid,
       viewer.id
       ));
-    
     dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
-
+    store.subscribe(()=>{
+      const { list } = store.getState();
+      if (list === false) {
+        this.props.history.push("/notfound");
+      }
+    });
 
   }
-  componentDidMount() {
 
-    
-  }
+
+  
 
   render() {
     let footpage;
@@ -164,4 +168,4 @@ const mapDispatchToProps = (dispatch,ownProps) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Itemslist);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Itemslist));
