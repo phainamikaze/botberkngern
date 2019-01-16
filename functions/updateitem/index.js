@@ -13,7 +13,7 @@ module.exports.handler = async (event, context) => {
     acttime:Date.now().toString(),
   };
   if(body.newstatus==="PAID"){
-    vals.msg = "อัพเดทสถานะเป็น จ่ายแล้ว";
+    vals.msg = "อัพเดทสถานะเป็น ชำระแล้ว";
   }else if(body.newstatus==="CONFIRM"){
     vals.msg = "อัพเดทสถานะเป็น ยืนยัน";
   }else{

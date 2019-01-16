@@ -5,7 +5,8 @@ export const itemServices = {
     deleteitem,
     paiditem,
     confirmitem,
-    paidall
+    paidall,
+    confirmall
 };
 function getItems(listid,filter){
     return fetch(config.API_ENDPOINT+"/item/"+listid+"?filter="+filter, {
@@ -109,6 +110,27 @@ function confirmitem(listid,createtime,viewer){
 
 function paidall(listid,amount,viewer){
     return fetch(config.API_ENDPOINT+"/paidall", {
+        method: "post",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            listid,
+            amount,
+            viewer
+        })
+    }).then(res => {
+        if (res.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return res.json();
+    }).then(body => {
+        return(body);
+    })
+}
+
+function confirmall(listid,amount,viewer){
+    return fetch(config.API_ENDPOINT+"/confirmall", {
         method: "post",
         headers: {
             'Content-Type': 'application/json'

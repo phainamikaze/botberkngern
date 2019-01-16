@@ -8,7 +8,8 @@ const itemActions = {
     paiditem,
     confirmitem,
     convertId,
-    paidall
+    paidall,
+    confirmall
 }
 
 function getItems(listid,filter){
@@ -143,5 +144,25 @@ function paidall(listid,amount,viewer){
     function request() { return { type: "PAIDALLITEM_REQUEST"} }
     function success() { return { type: "PAIDALLITEM_SUCCESS"} }
     function failure(error) { return { type: "PAIDALLITEM_FAILURE", error } }
+}
+function confirmall(listid,amount,viewer){
+    return dispatch => {
+        dispatch(menuActions.show("SHOW_MENU"));
+        dispatch(request());
+        return itemServices.confirmall(listid,amount,viewer)
+            .then(
+                body => { 
+                    dispatch(getItems(body.listid,"CONFIRM"));
+                    dispatch(success());
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    // dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+    function request() { return { type: "CONFIRMALLITEM_REQUEST"} }
+    function success() { return { type: "CONFIRMALLITEM_SUCCESS"} }
+    function failure(error) { return { type: "CONFIRMALLITEM_FAILURE", error } }
 }
 export default itemActions

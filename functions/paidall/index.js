@@ -57,7 +57,7 @@ function genParams(items,body){
             result.push(new Promise((res,rej)=>{
                 let vals = {
                     user:body.viewer,
-                    msg:"อัพเดทสถานะเป็น จ่ายแล้ว",
+                    msg:"อัพเดทสถานะเป็น ชำระแล้ว",
                     acttime:Date.now().toString(),
                   };
                 res({
