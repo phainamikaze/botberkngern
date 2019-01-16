@@ -63,7 +63,7 @@ const Listdetail  = ({data,viewer,paidall,confirmall})=>{
                 list={data}
             />);
         }else if(data.paid!==0){
-            confirmBotton = <Button type="primary" onClick={()=>{confirmall(data.owner+"_"+data.createtime,data.newval,viewer.id)}} >ยืนยันทั้งหมด</Button>
+            confirmBotton = <Button type="primary" onClick={()=>{confirmall(data.owner+"_"+data.createtime,data.paid,viewer.id)}} >ยืนยันทั้งหมด</Button>
         }else{
             confirmBotton = <Button type="primary" disabled>ยืนยันทั้งหมด</Button>
         }

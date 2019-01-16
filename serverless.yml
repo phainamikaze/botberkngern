@@ -63,6 +63,8 @@ layers:
     path: layers/messengerhepers
   Request:
     path: layers/request
+  Awssdk:
+    path: layers/awssdk
 functions:
   onlistchangeNoti:
     handler: functions/onlistchangenoti/index.handler
@@ -165,6 +167,8 @@ functions:
           path: paidall
           method: post
           cors: true
+    layers:
+      - {Ref: AwssdkLambdaLayer}
   confirmall:
     handler: functions/confirmall/index.handler
     events:
@@ -172,6 +176,8 @@ functions:
           path: confirmall
           method: post
           cors: true
+    layers:
+      - {Ref: AwssdkLambdaLayer}
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
