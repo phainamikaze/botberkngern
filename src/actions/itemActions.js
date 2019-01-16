@@ -7,7 +7,8 @@ const itemActions = {
     deleteitem,
     paiditem,
     confirmitem,
-    convertId
+    convertId,
+    paidall
 }
 
 function getItems(listid,filter){
@@ -123,5 +124,24 @@ function convertId(item){
     };
     function success(item) { return { type: "CONVERT_SUCCESS", item } }
 }
-
+function paidall(listid,amount,viewer){
+    return dispatch => {
+        dispatch(menuActions.show("SHOW_MENU"));
+        dispatch(request());
+        return itemServices.paidall(listid,amount,viewer)
+            .then(
+                body => { 
+                    dispatch(getItems(body.listid,"PAID"));
+                    dispatch(success());
+                },
+                error => {
+                    dispatch(failure(error.toString()));
+                    // dispatch(alertActions.error(error.toString()));
+                }
+            );
+    };
+    function request() { return { type: "PAIDALLITEM_REQUEST"} }
+    function success() { return { type: "PAIDALLITEM_SUCCESS"} }
+    function failure(error) { return { type: "PAIDALLITEM_FAILURE", error } }
+}
 export default itemActions

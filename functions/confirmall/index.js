@@ -10,21 +10,15 @@ module.exports.handler = async (event, context) => {
   const params = {
     TableName: ITEM_TABLE,
     Item: {
-      ownlist: body.listid,
+      owner: body.owner,
       createtime: Date.now().toString(),
-      amount: Number(body.amount),
-      details: body.details,
-      status:"NEW",
-      act:[
-        {
-          user:body.viewer,
-          msg:"สร้างไอเท็มใหม่",
-          acttime:Date.now().toString(),
-        }
-      ],
-      ownliststatus:body.listid+"_NEW"
+      title: body.title? body.title:'no name',
+      newval:0,
+      paid:0,
+      confirm:0
     },
   };
+  console.log(params);
   try {
     const data = await docClient.put(params).promise();
     return { 
@@ -33,7 +27,7 @@ module.exports.handler = async (event, context) => {
         "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
         "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
       },
-      body: JSON.stringify({ item: params.Item }) };
+      body: JSON.stringify({ id:(params.Item.owner+"_"+params.Item.createtime) }) };
   } catch(error) {
     return {
       statusCode: 400,

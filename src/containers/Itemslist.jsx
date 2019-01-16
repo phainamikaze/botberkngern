@@ -73,6 +73,7 @@ class Itemslist extends React.Component {
         <Bmodal show={this.props.show}>
           <Listdetail data={this.props.list} 
             viewer={this.props.viewer}
+            paidall={this.props.paidall}
           />
         </Bmodal>
       );
@@ -162,6 +163,13 @@ const mapDispatchToProps = (dispatch,ownProps) => {
         dispatch(itemActions.getItems(
           listid,
           filter
+        ));
+      },
+      paidall: (listid,amount,viewer)=>{
+        dispatch(itemActions.paidall(
+          listid,
+          amount,
+          viewer
         ));
       },
       dispatch

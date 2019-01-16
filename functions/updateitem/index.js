@@ -15,7 +15,7 @@ module.exports.handler = async (event, context) => {
   if(body.newstatus==="PAID"){
     vals.msg = "อัพเดทสถานะเป็น จ่ายแล้ว";
   }else if(body.newstatus==="CONFIRM"){
-    vals.msg = "อัพเดทสถานะเป็น ยืนยันว่าได้รับแล้ว";
+    vals.msg = "อัพเดทสถานะเป็น ยืนยัน";
   }else{
     return {
       statusCode: 400,
@@ -28,14 +28,16 @@ module.exports.handler = async (event, context) => {
       ownlist: body.listid,
       createtime: body.createtime
     },
-    UpdateExpression: "set #status = :status ,#act = list_append(:vals,#act)",
+    UpdateExpression: "set #status = :status ,#act = list_append(:vals,#act) , #ownliststatus = :ownliststatus",
     ExpressionAttributeNames:{
       "#status":"status",
-      "#act":"act"
+      "#act":"act",
+      "#ownliststatus":"ownliststatus"
     },
     ExpressionAttributeValues:{
         ":status":body.newstatus,
-        ":vals":[vals]
+        ":vals":[vals],
+        ":ownliststatus":body.listid+"_"+body.newstatus
     },
     ReturnValues:"ALL_NEW"
   };

@@ -13,7 +13,7 @@ import {
     FaCheckCircle,
 } from "react-icons/fa";
 import Invite from './Invite';
-const Listdetail  = ({data,viewer})=>{
+const Listdetail  = ({data,viewer,paidall})=>{
 
     let statusText,captionText,headText,headAmount;
     if(viewer.owner===true && viewer.sharedWithMe===false){
@@ -75,7 +75,7 @@ const Listdetail  = ({data,viewer})=>{
         );
     }else if(viewer.owner===false && viewer.sharedWithMe===true){
         if(data.newval!==0){
-            paidBotton = <Button type="primary" onClick={()=>{}}>ชำระแล้วทั้งหมด</Button>
+            paidBotton = <Button type="primary" onClick={()=>{paidall(data.owner+"_"+data.createtime,data.newval,viewer.id)}}>ชำระแล้วทั้งหมด</Button>
         }else{
             paidBotton = <Button type="primary" disabled>ชำระแล้วทั้งหมด</Button>
         }

@@ -9,24 +9,21 @@ module.exports.handler = async (event, context) => {
   const listid = event.pathParameters.id;
   let params = {
     TableName: ITEM_TABLE,
-    ExpressionAttributeValues: {
-        ":ownlist": listid
-    },
+    ExpressionAttributeValues: {},
     ScanIndexForward:false
   };
   if(filter==="ALL"){
     params.KeyConditionExpression = "ownlist = :ownlist";
+    params.ExpressionAttributeValues[":ownlist"]= listid;
   }else{
-    params.KeyConditionExpression = "ownlist = :ownlist and #status = :status";
-    params.ExpressionAttributeNames = {};
-    params.ExpressionAttributeNames["#status"] = "status";
-    params.IndexName = "ownlist-status-index";
+    params.KeyConditionExpression = "ownliststatus  = :ownliststatus";
+    params.IndexName = "ownliststatus-createtime-index";
     if(filter==="NEW"){
-      params.ExpressionAttributeValues[":status"]= "NEW";
+      params.ExpressionAttributeValues[":ownliststatus"]= listid+"_NEW";
     }else if(filter==="PAID"){
-      params.ExpressionAttributeValues[":status"]= "PAID";
+      params.ExpressionAttributeValues[":ownliststatus"]= listid+"_PAID";
     }else if(filter==="CONFIRM"){
-      params.ExpressionAttributeValues[":status"]= "CONFIRM";
+      params.ExpressionAttributeValues[":ownliststatus"]= listid+"_CONFIRM";
     }else{
       return {
         statusCode: 400,
