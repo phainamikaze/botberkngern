@@ -1,4 +1,4 @@
-const openExistingListButton = (listUrl, buttonText = 'Edit List') => {
+const openExistingListButton = (listUrl, buttonText = 'เปิดดู') => {
     return {
       type: 'web_url',
       title: buttonText,

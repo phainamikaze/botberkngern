@@ -14,6 +14,9 @@ module.exports.handler = (event, context ,callback) => {
             }else{
                 pageEntry.messaging.forEach((messagingEvent) => {
                     console.log({messagingEvent});
+                    if (messagingEvent.message) {
+                        result.push(receiveApi.handleReceiveMessage(messagingEvent));
+                    }
                     if (messagingEvent.postback) {
                         result.push(receiveApi.handleReceivePostback(messagingEvent));
                     }
