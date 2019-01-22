@@ -113,7 +113,7 @@ const Listdetail  = ({data,viewer,paidall,confirmall,showDialog,showDialogfunc,d
             {bottonArea}
         </Preview>
         <Dialog type="android" title="ยืนยันการลบ" buttons={delDiaglogButtons} show={showDialog}>
-            หากกดปุ่ม 'ลบรายการ' รายการนี้จะหายไปทั้งหมดและไม่สามารถยกเลิดได้
+            หากกดปุ่ม 'ลบรายการ' รายการนี้จะหายไปทั้งหมดและไม่สามารถยกเลิกได้
         </Dialog>
         </div>
     )

@@ -13,7 +13,9 @@ module.exports.handler = (event, context,callback) => {
           resolve();
         });
       }else if(record.eventName==="REMOVE"){
-        resolve();
+        sendApi.sendListDeleted(owner, record.dynamodb.OldImage.title.S).then(()=>{
+          resolve();
+        });
       }else{
         resolve();
       }
