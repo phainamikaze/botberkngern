@@ -75,6 +75,9 @@ class Itemslist extends React.Component {
             viewer={this.props.viewer}
             paidall={this.props.paidall}
             confirmall={this.props.confirmall}
+            showDialog={this.props.menu.showDialog}
+            showDialogfunc={this.props.showDialog}
+            delList={this.props.delList}
           />
         </Bmodal>
       );
@@ -140,6 +143,12 @@ const mapDispatchToProps = (dispatch,ownProps) => {
         ));
         dispatch(itemActions.convertId(data));
       },
+      delList: (owner,createtime)=>{
+        dispatch(listActions.delList(
+          owner,
+          createtime
+        ));
+      },
       deleteitem: (listid,createtime)=>{
         dispatch(itemActions.deleteitem(
           listid,
@@ -179,6 +188,9 @@ const mapDispatchToProps = (dispatch,ownProps) => {
           amount,
           viewer
         ));
+      },
+      showDialog: (params)=>{
+        dispatch(menuActions.showDialog(params));
       },
       dispatch
   };

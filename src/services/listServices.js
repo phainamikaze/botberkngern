@@ -3,7 +3,8 @@ import config from "../config";
 export const listService = {
     createlist,
     getlist,
-    updateSharedwith
+    updateSharedwith,
+    delList
 };
 function createlist(owner,title){
     return fetch(config.API_ENDPOINT+"/list", {
@@ -24,7 +25,25 @@ function createlist(owner,title){
         return(body);
     })
 }
-
+function delList(owner,createtime){
+    return fetch(config.API_ENDPOINT+"/list", {
+        method: "delete",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            createtime,
+            owner
+        })
+    }).then(res => {
+        if (res.status >= 400) {
+            throw new Error("Bad response from server");
+        }
+        return res.json();
+    }).then(body => {
+        return(body);
+    })
+}
 
 function getlist(listid){
     return fetch(config.API_ENDPOINT+"/list/"+listid, {

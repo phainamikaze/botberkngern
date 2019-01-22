@@ -1,10 +1,10 @@
 import { listService } from '../services/listServices';
-import itemActions  from './itemActions';
 import viewerActions from './viewerActions';
 
 const listActions = {
     createlist,
-    getlist
+    getlist,
+    delList
 }
 function createlist(viewerId,title,history){
     return dispatch => {
@@ -28,7 +28,27 @@ function createlist(viewerId,title,history){
     function success() { return { type: "LOADER_SUCCESS"} }
     function failure(error) { return { type: "LOADER_FAILURE", error } }
 }
-
+function delList(owner,createtime){
+    return dispatch => {
+        dispatch(request());
+        return listService.delList(
+                owner,
+                createtime
+            ).then(
+                body => { 
+                    dispatch(success());
+                    window.MessengerExtensions.requestCloseBrowser(null, null);
+                },
+                error => {
+                    window.MessengerExtensions.requestCloseBrowser(null, null);
+                    dispatch(failure(error.toString()));
+                }
+            );
+    };
+    function request() { return { type: "LOADER_REQUEST"} }
+    function success() { return { type: "LOADER_SUCCESS"} }
+    function failure(error) { return { type: "LOADER_FAILURE", error } }
+}
 function getlist(listid,viewerId=null){
     return dispatch => {
         dispatch(request());

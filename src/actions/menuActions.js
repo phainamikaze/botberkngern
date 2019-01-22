@@ -1,6 +1,7 @@
 
 const menuActions = {
-    show
+    show,
+    showDialog
 }
 
 function show(params,payload=null){
@@ -28,6 +29,17 @@ function show(params,payload=null){
         };
     }
         
+}
+function showDialog(params){
+    if(params===true){
+        return {
+            type: "SHOWDIALOG"
+        };
+    }else{
+        return {
+            type: "NOTSHOWDIALOG"
+        };
+    }
 }
 
 export default menuActions

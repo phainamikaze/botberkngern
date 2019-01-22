@@ -6,6 +6,7 @@ import {
     PreviewHeader,
     PreviewBody,
     PreviewItem,
+    Dialog
 } from 'react-weui';
 import { 
     FaExclamationCircle,
@@ -13,18 +14,18 @@ import {
     FaCheckCircle,
 } from "react-icons/fa";
 import Invite from './Invite';
-const Listdetail  = ({data,viewer,paidall,confirmall})=>{
+const Listdetail  = ({data,viewer,paidall,confirmall,showDialog,showDialogfunc,delList})=>{
 
     let statusText,captionText,headText,headAmount;
     if(viewer.owner===true && viewer.sharedWithMe===false){
         statusText = "เรียกเก็บเงิน";
         captionText = "กดปุ่ม 'ยืนยันทั้งหมด' เพื่อยืนยันยอดที่ 'ชำระแล้ว' ทั้งหมด";
-        headText = "ชำระแล้ว "+"x"+" รายการ รวมทั้งหมด";
+        headText = "ชำระแล้ว รวมทั้งหมด";
         headAmount = "฿"+data.paid;
     }else if(viewer.owner===false && viewer.sharedWithMe===true){
         statusText = "ค้างชำระ";
         captionText = "กดปุ่ม 'ชำระแล้วทั้งหมด' เพื่อชำระยอดที่ 'ค้างชำระ' ทั้งหมด";
-        headText = "ค้างชำระ "+"x"+" รายการ รวมทั้งหมด";
+        headText = "ค้างชำระ รวมทั้งหมด";
         headAmount = "฿"+data.newval;
     }else{
         statusText = "มาใหม่";
@@ -48,7 +49,18 @@ const Listdetail  = ({data,viewer,paidall,confirmall})=>{
             {statusIcon3} ยืนยัน
         </div>
     );
-
+    const delDiaglogButtons = [
+        {
+            type: 'default',
+            label: 'ไม่ลบ',
+            onClick: ()=>{showDialogfunc(false)}
+        },
+        {
+            type: 'default',
+            label: 'ลบรายการ',
+            onClick: ()=>{delList(data.owner,data.createtime)}
+        }
+    ];
 
     let bottonArea,delBotton,confirmBotton,paidBotton;
     if(viewer.owner===false && viewer.sharedWithMe===false){
@@ -56,7 +68,7 @@ const Listdetail  = ({data,viewer,paidall,confirmall})=>{
             <ButtonArea direction="horizontal"></ButtonArea>
         );
     }else if(viewer.owner===true && viewer.sharedWithMe===false){
-        delBotton = <Button type="warn" onClick={()=>{}}>ลบรายการนี้</Button>
+        delBotton = <Button type="warn" onClick={()=>{showDialogfunc(true)}}>ลบรายการนี้</Button>
 
         if(!data.sharedwith){
             confirmBotton = (<Invite 
@@ -100,6 +112,9 @@ const Listdetail  = ({data,viewer,paidall,confirmall})=>{
             </PreviewBody>
             {bottonArea}
         </Preview>
+        <Dialog type="android" title="ยืนยันการลบ" buttons={delDiaglogButtons} show={showDialog}>
+            หากกดปุ่ม 'ลบรายการ' รายการนี้จะหายไปทั้งหมดและไม่สามารถยกเลิดได้
+        </Dialog>
         </div>
     )
 };

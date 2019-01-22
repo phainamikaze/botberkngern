@@ -97,6 +97,13 @@ functions:
           path: list
           method: post
           cors: true
+  dellist:
+    handler: functions/dellist/index.handler
+    events:
+      - http:
+          path: list
+          method: delete
+          cors: true
   getlist:
     handler: functions/getlist/index.handler
     events:
