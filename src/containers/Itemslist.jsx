@@ -24,7 +24,7 @@ class Itemslist extends React.Component {
       this.props.match.params.listid,
       viewer.id
       ));
-    dispatch(itemActions.getItems(this.props.match.params.listid,"NEW"));
+    dispatch(itemActions.getItems(this.props.match.params.listid,"ALL"));
     store.subscribe(()=>{
       const { list } = store.getState();
       if (list === false) {
