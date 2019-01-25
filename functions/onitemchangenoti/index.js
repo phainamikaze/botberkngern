@@ -13,7 +13,19 @@ module.exports.handler = (event, context,callback) => {
     result.push(new Promise((resolve,reject)=>{
       const ownlist = record.dynamodb.Keys.ownlist.S;
       const [owner,createtime] = ownlist.split("_");
-      if(record.eventName==="MODIFY"){
+      if(record.eventName==="INSERT"){
+        getList(owner,createtime).then((list)=>{
+          return list;
+        }).then((list)=>{
+          if(list.sharedwith){
+            sendApi.sendItemInsert(list.sharedwith, owner, createtime,list.title,record.dynamodb.NewImage.details.S).then(()=>{
+              resolve();
+            })
+          }else{
+            resolve();
+          }
+        })
+      }else if(record.eventName==="MODIFY"){
         if(record.dynamodb.NewImage.status.S === record.dynamodb.OldImage.status.S){
           resolve();
         }else{
@@ -33,7 +45,7 @@ module.exports.handler = (event, context,callback) => {
           if(recipientId===null){
             resolve();
           }else{
-            getListname(owner,createtime).then((list)=>{
+            getList(owner,createtime).then((list)=>{
               return list.title;
             }).then((listname)=>{
               return sendApi.sendItemUpdated(recipientId, owner, createtime,listname,record.dynamodb.NewImage.details.S)
@@ -54,7 +66,7 @@ module.exports.handler = (event, context,callback) => {
   });
 };
 
-const getListname = (owner,createtime)=>{
+const getList = (owner,createtime)=>{
   return new Promise((resolve,reject)=>{
     const params = {
       TableName: LIST_TABLE,
@@ -65,7 +77,7 @@ const getListname = (owner,createtime)=>{
     };
     docClient.get(params,function(err,data){
       if(err){
-        resolve('ไม่มีชื่อ');
+        resolve({title:'ไม่มีชื่อ'});
       }else{
         resolve(data.Item);
       }
