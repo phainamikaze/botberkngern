@@ -80,6 +80,12 @@ functions:
     handler: functions/onitemchange/index.handler
     events:
       - stream: arn:aws:dynamodb:ap-southeast-1:435044949037:table/BBG-ITEM/stream/2019-01-16T05:32:21.282
+  onitemchangeNoti:
+    handler: functions/onitemchangenoti/index.handler
+    events:
+      - stream: arn:aws:dynamodb:ap-southeast-1:435044949037:table/BBG-ITEM/stream/2019-01-16T05:32:21.282
+    layers:
+      - {Ref: MessengerHepersLambdaLayer}
   verifytoken:
     handler: functions/verifytoken/index.handler
     events:
