@@ -7,13 +7,31 @@ const docClient = new AWS.DynamoDB.DocumentClient({region: AWS_REGION});
 module.exports.handler = async (event, context) => {
   const body = JSON.parse(event.body);
   console.log(body);
+  //-------------
+  const monEng = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const monTha = ["มกราคม","กุมภาพันธ์","มีนาคม","เมษายน","พฤษภาคม","มิถุนายน","กรกฎาคม","สิงหาคม","กันยายน","ตุลาคม","พฤศจิกายน","ธันวาคม"];
+  const [dmon,dday,dyear] = body.details.split(" ");
+  let ifmonth;
+  let details;
+  const ifmon = monEng.some((mon,i)=>{
+    if(mon===dmon){
+      ifmonth = monTha[i]
+      return true
+    }
+  })
+  if(ifmon===true){
+    details = ifmonth+' '+dyear;
+  }else{
+    details = body.details;
+  }
+  //-------------
   const params = {
     TableName: ITEM_TABLE,
     Item: {
       ownlist: body.listid,
       createtime: Date.now().toString(),
       amount: Number(body.amount),
-      details: body.details,
+      details: details,
       status:"NEW",
       act:[
         {
